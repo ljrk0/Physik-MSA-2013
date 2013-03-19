@@ -47,7 +47,7 @@ Function Ph_DoCollision(t#, maxabs#)
 	
 End Function
 
-Function Ph_CollideObjectAfterTime(obj1.Ph_Object, obj2.Ph_Object, t#, P#[1], angle#[0])
+Function Ph_CollideObjectAfterTime(obj1.Ph_Object, obj2.Ph_Object, t#)
 	Local virtual1.Ph_Object = Ph_GetVirtualCopyAfterTime(obj1,t)
 	Local virtual2.Ph_Object = Ph_GetVirtualCopyAfterTime(obj2,t)
 	
