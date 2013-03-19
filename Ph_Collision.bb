@@ -64,20 +64,58 @@ Function Ph_CollideObjectAfterTime(obj1.Ph_Object, obj2.Ph_Object, t#)
 	Return rBank
 End Function
 
-Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2#[1], vector#)
+Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2#[1], angle#)
 	; TODO Apply the Collision Forces / Stoesse
-	Local obj1vel1[1]
-	Local obj2vel1[1]
-	Local obj1vel2[1]
-	Local obj2vel2[1]
+	
+	
+	Local obj1vel1norm#[1]
+	Local obj2vel1norm#[1]
+	Local obj1vel1Lenght#
+	Local obj2vel1Lenght#
+	Local obj1vel2norm#[1]
+	Local obj2vel2norm#[1]
+	Local obj1vel2Lenght#
+	Local obj2vel2Lenght#
 	
 	; Berechnug der unbeeinflussten Teile (vel1)
 	
+	obj1vel1norm[0]=1
+	obj1vel1norm[1]=0	
+	RotateVector(obj1vel1norm,angle,obj1vel1norm)
+	
+	obj2vel1norm[0]=1
+	obj2vel1norm[1]=0	
+	RotateVector(obj2vel1norm,angle,obj2vel1norm)
+	
+	Local temp[1]
+	temp[0]=1
+	temp[1]=0	
+	obj1vel1Lenght=Sin(90-RadToDeg(VectorAngle(obj1\Vel,temp)-angle))*VectorLenght(obj1\Vel) ; why Illegal Type
+	obj2vel1Lenght=Sin(90-RadToDeg(VectorAngle(obj2\Vel,temp)-angle))*VectorLenght(obj2\Vel)
+	
 	; Berechung der beeinflussten Teile der Geschwindigkeit (vel2)
+	
+	obj1vel2norm[0]=1
+	obj1vel2norm[1]=0	
+	RotateVector(obj1vel2norm,angle-(Pi/2),obj1vel2norm)
+	
+	obj2vel2norm[0]=1
+	obj2vel2norm[1]=0	
+	RotateVector(obj2vel2norm,angle-(Pi/2),obj2vel2norm)
+	
+	obj1vel2Lenght=Sin(RadToDeg(VectorAngle(obj1\Vel,temp)-angle))*VectorLenght(obj1\Vel)
+	obj2vel2Lenght=Sin(RadToDeg(VectorAngle(obj2\Vel,temp)-angle))*VectorLenght(obj2\Vel)
 	
 	; berechnung der Stosses
 	
+	
+	
 	; berechnug der Endgeschwindigkeit (Vectoraddition)
+	
+	MultiplyVector(obj1vel1norm,obj1vel1Lenght,obj2vel1norm)
+	MultiplyVector(obj1vel2norm,obj1vel1Lenght,obj2vel2norm)
+	MultiplyVector(obj2vel1norm,obj1vel1Lenght,obj2vel1norm)
+	MultiplyVector(obj2vel2norm,obj1vel1Lenght,obj2vel2norm)
 	
 	; berechnung der dafuer noetigen Kreafte
 	
