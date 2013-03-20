@@ -32,7 +32,7 @@ Function Ph_DoCollision(t#, maxabs#)
 				Ph_RelativatePosition(obj,Temp,Temp1)
 				Ph_RelativatePosition(obj2,Temp,Temp2)
 				
-				Ph_ApplyCollision(obj,obj2, Temp1, Temp2, PeekFloat(tBank,8))
+				Ph_ApplyCollision(obj,obj2, Temp1, Temp2, PeekFloat(tBank,8), 1)
 				
 			EndIf
 			If obj2 = Last Ph_Object Then
@@ -64,7 +64,7 @@ Function Ph_CollideObjectAfterTime(obj1.Ph_Object, obj2.Ph_Object, t#)
 	Return rBank
 End Function
 
-Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2#[1], angle#)
+Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2#[1], angle#, k#)
 	; TODO Apply the Collision Forces / Stoesse
 	
 	
@@ -76,6 +76,8 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	Local obj2vel2norm#[1]
 	Local obj1vel2Lenght#
 	Local obj2vel2Lenght#
+	Local obj1vel2LenghtC#
+	Local obj2vel2LenghtC#
 	
 	; Berechnug der unbeeinflussten Teile (vel1)
 	
@@ -87,10 +89,11 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	obj2vel1norm[1]=0	
 	RotateVector(obj2vel1norm,angle,obj2vel1norm)
 	
-	Local temp[1]
+	Local temp#[1]
 	temp[0]=1
 	temp[1]=0	
-	obj1vel1Lenght=Sin(90-RadToDeg(VectorAngle(obj1\Vel,temp)-angle))*VectorLenght(obj1\Vel) ; why Illegal Type
+	
+	obj1vel1Lenght=Sin(90-RadToDeg(VectorAngle(obj1\Vel,temp)-angle))*VectorLenght(obj1\Vel) ; why Illegal Type-conversion???
 	obj2vel1Lenght=Sin(90-RadToDeg(VectorAngle(obj2\Vel,temp)-angle))*VectorLenght(obj2\Vel)
 	
 	; Berechung der beeinflussten Teile der Geschwindigkeit (vel2)
@@ -108,16 +111,18 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	
 	; berechnung der Stosses
 	
-	
+	obj1vel2LenghtC = (obj1\Mass*obj1vel2Lenght + obj2\Mass*obj2vel2Lenght - obj2\Mass*(obj1vel2Lenght-obj2vel2Lenght)*k)/(obj1\Mass + obj2\Mass)
+	obj1vel2LenghtC = (obj1\Mass*obj1vel2Lenght + obj2\Mass*obj2vel2Lenght - obj1\Mass*(obj1vel2Lenght-obj1vel2Lenght)*k)/(obj1\Mass + obj2\Mass)
 	
 	; berechnug der Endgeschwindigkeit (Vectoraddition)
 	
-	MultiplyVector(obj1vel1norm,obj1vel1Lenght,obj2vel1norm)
-	MultiplyVector(obj1vel2norm,obj1vel1Lenght,obj2vel2norm)
-	MultiplyVector(obj2vel1norm,obj1vel1Lenght,obj2vel1norm)
-	MultiplyVector(obj2vel2norm,obj1vel1Lenght,obj2vel2norm)
+	MultiplyVector(obj1vel1norm,obj1vel1Lenght,obj1vel1norm)
+	MultiplyVector(obj1vel2norm,obj1vel2Lenght,obj1vel2norm)
+	MultiplyVector(obj2vel1norm,obj2vel1Lenght,obj2vel1norm)
+	MultiplyVector(obj2vel2norm,obj2vel2Lenght,obj2vel2norm)
 	
-	; berechnung der dafuer noetigen Kreafte
+	AddVector(obj1vel1norm, obj1vel2norm, obj1\Vel)
+	AddVector(obj2vel1norm, obj2vel2norm, obj2\Vel)
 	
 End Function
 ;~IDEal Editor Parameters:
