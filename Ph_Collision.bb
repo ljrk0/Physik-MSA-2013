@@ -7,11 +7,12 @@ Function Ph_DoCollision(t#, maxabs#)
 	Local Temp2#[1]
 	Local tBank
 	obj = First Ph_Object
+	Stop
 	Repeat
 		obj2 = After obj
 		Repeat
 			If Ph_CollideObjectAfterTime(obj, obj2, t) Then
-				Local i=0
+				Local i=1
 				Local t2#=0.5
 				Repeat
 					i=i+1

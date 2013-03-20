@@ -17,7 +17,8 @@ Function Ph_GetAbsolutCollisionBox.Shape(obj.Ph_Object)
 	Local result.Shape = New Shape
 	result\PointAnz = obj2\PointAnz
 	Local i
-	For i = 0 To obj2\PointAnz
+	For i = 0 To obj2\PointAnz-1
+		result\Point[i] = New Point
 		RotateVector(obj2\Point[i]\Pos, obj\Rot, result\Point[i]\Pos)
 	Next
 	Return result
