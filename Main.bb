@@ -8,7 +8,7 @@ Include "Ph_Main.bb"
 Local Testobject1.Ph_Object = New Ph_Object
 Testobject1\Pos[0] = 1
 Testobject1\Pos[1] = 1.2
-Testobject1\Mass = 5    ;XD
+Testobject1\Mass = 5
 
 Local CBox.Shape = Sh_CreateSquare(-0.4,-1,0.4,1)
 Testobject1\CollisionBox = CBox
