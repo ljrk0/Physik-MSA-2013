@@ -24,7 +24,7 @@ Function Ph_DoTick(Obj.Ph_Object, Time#)
 	AddVector(Obj\Vel,a,Obj\Vel)
 	Obj\RotVel=Obj\RotVel+Obj\RotAcc*Time
 	
-	; Apply Velosity to Posiion
+	; Apply Velocity to Position
 	
 	MultiplyVector(Obj\Vel, Time, a)
 	

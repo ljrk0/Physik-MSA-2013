@@ -7,7 +7,6 @@ Function Ph_DoCollision(t#, maxabs#)
 	Local Temp2#[1]
 	Local tBank
 	obj = First Ph_Object
-	Stop
 	Repeat
 		obj2 = After obj
 		Repeat

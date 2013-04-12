@@ -59,7 +59,7 @@ Repeat
 	
 	
 	
-	Ph_DoCollision((MilliSecs()-LastTime)/1000,0.1)
+	;Ph_DoCollision((MilliSecs()-LastTime)/1000,0.1)
 	
 	Ph_DoTick(Testobject1, (MilliSecs()-LastTime)/1000)
 	
@@ -74,7 +74,6 @@ Repeat
 	Color 255,255,0
 	Line pos1[0]*100+Testobject1\Pos[0]*100,pos1[1]*100+Testobject1\Pos[1]*100,pos1[0]*100+Testobject1\Pos[0]*100+force1[0]*200,pos1[1]*100+Testobject1\Pos[1]*100+force1[1]*200
 	Line pos2[0]*100+Testobject1\Pos[0]*100,pos2[1]*100+Testobject1\Pos[1]*100,pos2[0]*100+Testobject1\Pos[0]*100+force2[0]*200,pos2[1]*100+Testobject1\Pos[1]*100+force2[1]*200
-	
 	
 	Flip
 Until KeyHit(1)
