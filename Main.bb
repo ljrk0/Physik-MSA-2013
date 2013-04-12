@@ -1,6 +1,6 @@
 Graphics 800,600,0,6
 SetBuffer BackBuffer()
-AppTitle "MSA 2013 - Physicsimulationen in der Informatik - Copuright (c) 2013 by Jochen Jacobs & Leonard Robert Koenig"
+AppTitle "MSA 2013 - Physiksimulationen in der Informatik - Copyright © 2013 by Jochen Jacobs & Leonard Robert Koenig"
 
 Include "Help.bb"
 Include "Ph_Main.bb"
@@ -59,7 +59,7 @@ Repeat
 	
 	
 	
-	;Ph_DoCollision((MilliSecs()-LastTime)/1000,0.1)
+	Ph_DoCollision((MilliSecs()-LastTime)/1000,0.1)
 	
 	Ph_DoTick(Testobject1, (MilliSecs()-LastTime)/1000)
 	

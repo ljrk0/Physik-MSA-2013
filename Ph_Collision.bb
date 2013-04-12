@@ -31,7 +31,6 @@ Function Ph_DoCollision(t#, maxabs#)
 				
 				Ph_RelativatePosition(obj,Temp,Temp1)
 				Ph_RelativatePosition(obj2,Temp,Temp2)
-				
 				Ph_ApplyCollision(obj,obj2, Temp1, Temp2, PeekFloat(tBank,8), 1)
 				
 			EndIf
@@ -55,7 +54,6 @@ Function Ph_CollideObjectAfterTime(obj1.Ph_Object, obj2.Ph_Object, t#)
 	Local virtualShape2.Shape = Ph_GetAbsolutCollisionBox(virtual2)
 	
 	Local rBank = Ph_CollisionBoxColliding(virtualShape1,virtualShape2)
-	
 	Delete virtual1
 	Delete virtual2
 	Delete virtualShape1

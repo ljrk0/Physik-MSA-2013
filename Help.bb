@@ -83,61 +83,133 @@ End Function
 ;    Return (r >= 0 And r <= 1) And (s >= 0 And s <= 1)
 ;End Function
 
-Function IsIntersecting(P1#[1], P2#[1], P3#[1], P4#[1], CP#[1])
+Function lineLine(P1#[1],P2#[1],P3#[1],P4#[1], CP#[1] )
 	
+	Print "---"
 	
+	Local Ax#,Bx#,Cx#,Ay#,By#,Cy#,d#,e#,f#,num#,offset#;
+
+	Local x1lo#,x1hi#,y1lo#,y1hi#;
+
 	
+	Ax = P2[0]-P1[0];
+
+	Bx = P3[0]-P4[0];
+
+
+
+	; X bound box test/
+
+	If(Ax<0) Then
 	
-	Local m1#;
-	Local t1;
-	Local m2#;
-	Local t2;
+		x1lo=P2[0];
+		x1hi=P1[0];
 	
-	;Local xs#, ys#
-	If P1[0]=P2[0] Then   ; 1. Strecke keine Funktion (m=unendlich)
-		If P3[0]=P4[0] Then   ; 2. Strecke keine Funktion
-			If P1[0]=P3[0] Then
-				; Strecken liegen in einer Geraden
-				Return False
-			Else
-				; Strecken haben keinen schnittpunkt (sind parallel)
-				Return False;
-			EndIf
-		Else 
-			m2=(P3[1]-P4[1])/(P3[0]-P4[0])
-			t2=P3[0]-(m2*P3[0])
-			CP[0]=P1[0]
-			CP[1]=(CP[0])*m2+t2
-		EndIf
-	Else
-		If P3[0]=P4[0] Then
-			m1=(P1[1]-P2[1])/(P1[0]-P2[0])
-			t1=P1[1]-(m1*P1[0])
-			CP[0]=P3[0];
-			CP[1]=(CP[0]*m1)+t1
-		Else
-			m1=(P1[1]-P2[1])/(P1[0]-P2[0])
-			t1=P1[1]-(m1*(P1[0]))
-			m2=(P3[1]-P4[1])/(P3[0]-P4[0])
-			t2=P3[1]-(m2*P3[0])
-			;endif?
-			If m1=m2 Then   ; gleiche Steigung, heikel, da m1, m2 floats (siehe hilfedatei)
-						; evtl. workaround:
-				If m1*1000=m2*1000 Then
-					If t1=t2 Then   ; gleicher y-Abschnitt
-						; Strecken liegen in einer Geraden
-						Return 0
-					Else 
-						; Strecken sind parallel
-						Return 0;
-					EndIf
-				EndIf
-				CP[0]=(t2-t1)/(m1-m2)
-				CP[1]=(CP[0]*m2)+t2
-			EndIf
-		EndIf
-		Return True;
+    Else
+	
+		x1hi=P2[0];
+		x1lo=P1[0];
+		
 	EndIf
+	
+    If(Bx>0) Then
+		
+        If(x1hi < P4[0] Or P3[0] < x1lo) Then Return False;
+			
+	Else
+		If(x1hi < P3[0] Or P4[0] < x1lo) Then Return False;
+	EndIf
+	Ay = P2[1]-P1[1];
+
+	By = P3[1]-P4[1];
+	
+		
+		
+	;Y bound box test//
+		
+	If(Ay<0) Then                  
+		
+		y1lo=P2[1];
+		y1hi=P1[1];
+		
+	Else
+		
+		y1hi=P2[1];
+		y1lo=P1[1];
+		
+	EndIf
+		
+	If(By>0) Then
+		If(y1hi < P4[1] Or P3[1] < y1lo) Then Return False;
+	Else 
+		If(y1hi < P3[1] Or P4[1] < y1lo) Then Return False;
+	EndIf			
+	
+	Cx = P1[0]-P3[0];
+	Cy = P1[1]-P3[1];
+	
+	d = By*Cx - Bx*Cy;  // alpha numerator//
+	
+	f = Ay*Bx - Ax*By;  // both denominator//
+	
+	
+	
+	; alpha tests//
+			
+	If(f>0) Then
+		
+		If(d<0 Or d>f) Then Return False;
+	Else
+		If(d>0 Or d<f) Then Return False;
+	EndIf
+	
+	e = Ax*Cy - Ay*Cx;  // beta numerator//
+
+	; beta tests //
+		
+	If(f>0) Then                           
+		
+		If(e<0 Or e>f) Then Return False;
+			
+	Else
+			
+		If(e>0 Or e<f) Then Return False
+	EndIf		
+			; check If they are parallel
+			
+	If(f=0) Then Return False;
+									
+										
+										
+	; compute intersection coordinates //
+	
+	num = d*Ax; // numerator //
+	
+	If same_sign(num,f) Then offset = f*0.5 Else offset = -f*0.5
+	
+	CP[0] = P1[0] + (num+offset) / f;
+	
+	
+	
+	num = d*Ay;
+	
+	If same_sign(num,f) Then offset = f*0.5 Else offset = -f*0.5
+	
+	CP[1] = P1[1] + (num+offset) / f;
+	
+	Print MilliSecs()
+	WaitKey()
+	
+	Return True;
+	
+End Function
+																
+																
+																
+Function same_sign( a#, b# )
+
+    Return ( ( a * b ) >= 0 );
+
 End Function
 ;~IDEal Editor Parameters:
 ;~C#Blitz3D

@@ -38,7 +38,7 @@ Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
 	Local Pos1#[1]
 	For i=1 To obj1\PointAnz
 		For j=1 To obj2\PointAnz
-			If IsIntersecting(obj1\Point[i Mod obj1\PointAnz]\Pos, obj1\Point[i-1]\Pos,obj2\Point[j Mod obj2\PointAnz]\Pos, obj2\Point[i-1]\Pos, temp) Then
+			If lineLine(obj1\Point[i Mod obj1\PointAnz]\Pos, obj1\Point[i-1]\Pos,obj2\Point[j Mod obj2\PointAnz]\Pos, obj2\Point[i-1]\Pos, temp) Then
 				If count=0 Then
 					Pos0[0] = temp[0]
 					Pos0[1] = temp[1]
@@ -46,6 +46,7 @@ Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
 					Pos1[0] = temp[0]
 					Pos1[1] = temp[1]
 				EndIf
+				
 				count=count+1
 			EndIf
 			If count=>2 Then Exit
@@ -53,13 +54,13 @@ Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
 		If count=>2 Then Exit
 	Next
 	If count=2 Then
+		
 		Local Bank = CreateBank(12)
 		
 		AddVector(Pos0,Pos1,temp)
 		DivideVector(temp,2,temp)
 		PokeFloat Bank, 0, temp[0]
 		PokeFloat Bank, 4, temp[1]
-		
 		temp2[0]=1
 		temp2[1]=0
 		SubtractVector(Pos1,Pos0,temp)
