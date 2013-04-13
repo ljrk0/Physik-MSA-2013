@@ -85,7 +85,6 @@ End Function
 
 Function lineLine(P1#[1],P2#[1],P3#[1],P4#[1], CP#[1] )
 	
-	Print "---"
 	
 	Local Ax#,Bx#,Cx#,Ay#,By#,Cy#,d#,e#,f#,num#,offset#;
 
@@ -197,8 +196,6 @@ Function lineLine(P1#[1],P2#[1],P3#[1],P4#[1], CP#[1] )
 	
 	CP[1] = P1[1] + (num+offset) / f;
 	
-	Print MilliSecs()
-	WaitKey()
 	
 	Return True;
 	
