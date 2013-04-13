@@ -134,22 +134,22 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	
 	;berechnung der anteile fuer Bewegung und Rotation
 	; - obj1
-	angle = VectorAngle( obj1vel, pos_obj1 )
+	angle = VectorAngle(pos_obj1, obj1vel)
 	obj1\Vel[0]=1
 	obj1\Vel[1]=0
 	RotateVector(obj1\Vel, (Pi/2) - angle, obj1\Vel)
-	MultiplyVector(obj1\Vel, Sin((90+RadToDeg(angle))*VectorLenght(obj1vel)), obj1\Vel)
+	MultiplyVector(obj1\Vel, Sin((90-RadToDeg(angle))*VectorLenght(obj1vel)), obj1\Vel)
 	
-	obj1\RotVel=obj1\RotVel+((Sin(RadToDeg(angle))*VectorLenght(obj1vel))/VectorLenght(pos_obj1))
+	obj1\RotVel=obj1\RotVel-((Sin(RadToDeg(angle))*VectorLenght(obj1vel))/VectorLenght(pos_obj1))
 	
 	; - obj2
 	angle = VectorAngle( obj2vel, pos_obj2 )
 	obj2\Vel[0]=1
 	obj2\Vel[1]=0
 	RotateVector(obj2\Vel, (Pi/2) - angle, obj2\Vel)
-	MultiplyVector(obj2\Vel, Sin((90+RadToDeg(angle))*VectorLenght(obj2vel)), obj2\Vel)
+	MultiplyVector(obj2\Vel, Sin((90-RadToDeg(angle))*VectorLenght(obj2vel)), obj2\Vel)
 	
-	obj2\RotVel=obj2\RotVel+((Sin(RadToDeg(angle))*VectorLenght(obj2vel))/VectorLenght(pos_obj2))
+	obj2\RotVel=obj2\RotVel-((Sin(RadToDeg(angle))*VectorLenght(obj2vel))/VectorLenght(pos_obj2))
 	
 End Function
 ;~IDEal Editor Parameters:
