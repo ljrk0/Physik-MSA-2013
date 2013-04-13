@@ -70,6 +70,7 @@ End Function
 Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2#[1], angle#, k#)
 	; TODO Apply the Collision Forces / Stoesse
 	
+	If obj1\Fixed And obj2\Fixed Then Return
 	
 	Local obj1vel1norm#[1]
 	Local obj2vel1norm#[1]
@@ -119,10 +120,18 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	
 	obj1vel2LenghtC = (obj1\Mass*obj1vel2Lenght + obj2\Mass*obj2vel2Lenght - obj2\Mass*(obj1vel2Lenght-obj2vel2Lenght)*k)/(obj1\Mass + obj2\Mass)
 	obj2vel2LenghtC = (obj1\Mass*obj1vel2Lenght + obj2\Mass*obj2vel2Lenght - obj1\Mass*(obj2vel2Lenght-obj1vel2Lenght)*k)/(obj1\Mass + obj2\Mass)
-	
-	
-	
 	; berechnug der Endgeschwindigkeit (Vectoraddition)
+	If obj1\Fixed Then
+		obj2vel1Lenght=obj2vel1Lenght+obj1vel1Lenght
+		obj2vel2LenghtC=obj2vel2LenghtC+obj1vel2LenghtC
+;		obj1vel1Lenght=0
+;		obj1vel2LenghtC=0
+	Else If obj2\Fixed Then
+		obj1vel1Lenght=obj1vel1Lenght+obj2vel1Lenght
+		obj1vel2LenghtC=obj1vel2LenghtC+obj2vel2LenghtC
+;		obj2vel1Lenght=0
+;		obj2vel2LenghtC=0
+	EndIf
 	
 	MultiplyVector(obj1vel1norm,obj1vel1Lenght,obj1vel1norm)
 	MultiplyVector(obj1vel2norm,obj1vel2LenghtC,obj1vel2norm)
@@ -134,22 +143,35 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	
 	;berechnung der anteile fuer Bewegung und Rotation
 	; - obj1
-	angle = VectorAngle(pos_obj1, obj1vel)
-	obj1\Vel[0]=1
-	obj1\Vel[1]=0
-	RotateVector(obj1\Vel, (Pi/2) - angle, obj1\Vel)
-	MultiplyVector(obj1\Vel, Sin((90-RadToDeg(angle))*VectorLenght(obj1vel)), obj1\Vel)
 	
-	obj1\RotVel=obj1\RotVel-((Sin(RadToDeg(angle))*VectorLenght(obj1vel))/VectorLenght(pos_obj1))
+	;If obj1\Fixed Then
+	;	SubtractVector(obj1vel, obj2vel, obj1vel)
+	;Else If obj2\Fixed Then
+	;	SubtractVector(obj2vel, obj1vel, obj2vel)
+	;EndIf
+	
+	If Not obj1\Fixed Then
+		angle = VectorAngle(pos_obj1, obj1vel)
+		obj1\Vel[0]=1
+		obj1\Vel[1]=0
+		RotateVector(obj1\Vel, (Pi/2) - angle, obj1\Vel)
+		MultiplyVector(obj1\Vel, Sin((90-RadToDeg(angle))*VectorLenght(obj1vel)), obj1\Vel)
+		
+		obj1\RotVel=obj1\RotVel-((Sin(RadToDeg(angle))*VectorLenght(obj1vel))/VectorLenght(pos_obj1))
+	EndIf
 	
 	; - obj2
-	angle = VectorAngle( obj2vel, pos_obj2 )
-	obj2\Vel[0]=1
-	obj2\Vel[1]=0
-	RotateVector(obj2\Vel, (Pi/2) - angle, obj2\Vel)
-	MultiplyVector(obj2\Vel, Sin((90-RadToDeg(angle))*VectorLenght(obj2vel)), obj2\Vel)
 	
-	obj2\RotVel=obj2\RotVel-((Sin(RadToDeg(angle))*VectorLenght(obj2vel))/VectorLenght(pos_obj2))
+	If Not obj2\Fixed Then
+		angle = VectorAngle( obj2vel, pos_obj2 )
+		obj2\Vel[0]=1
+		obj2\Vel[1]=0
+		RotateVector(obj2\Vel, (Pi/2) - angle, obj2\Vel)
+		MultiplyVector(obj2\Vel, Sin((90-RadToDeg(angle))*VectorLenght(obj2vel)), obj2\Vel)
+		
+		obj2\RotVel=obj2\RotVel-((Sin(RadToDeg(angle))*VectorLenght(obj2vel))/VectorLenght(pos_obj2))
+	EndIf
+	
 	
 End Function
 ;~IDEal Editor Parameters:

@@ -13,6 +13,7 @@ Type Ph_Object
 	Field RotMass#  ; kg/px²
 	Field CollisionBox.Shape
 	Field Virtual
+	Field Fixed
 End Type
 
 Function Ph_DoTick(Obj.Ph_Object, Time#)
@@ -38,6 +39,7 @@ Function Ph_DoTick(Obj.Ph_Object, Time#)
 End Function
 
 Function Ph_ApplyForce(Obj.Ph_Object, Force#[1], approach#[1], Relative = True)
+	If Obj\Fixed Then Return
 	If Relative Then
 		RotateVector(Force,Obj\Rot,Force)
 		RotateVector(approach,Obj\Rot,approach)
@@ -65,12 +67,14 @@ Function Ph_ApplyForce(Obj.Ph_Object, Force#[1], approach#[1], Relative = True)
 End Function
 
 Function Ph_ApplyVelForce(Obj.Ph_Object, Force#[1])
+	If Obj\Fixed Then Return
 	Local a#[1]
 	DivideVector(Force,Obj\Mass, a)
 	AddVector(Obj\Acc,a,Obj\Acc)
 End Function
 
 Function Ph_ApplyRotTorque(Obj.Ph_Object, Torque#)
+	If Obj\Fixed Then Return
 	Obj\RotAcc=Obj\RotAcc+Torque/Obj\RotMass
 End Function
 
@@ -97,7 +101,7 @@ Function Ph_GetVirtualCopyAfterTime.Ph_Object(obj.Ph_Object,t#)
 	result\Vel[1] = obj\Vel[1]
 	result\Virtual = True
 	
-	Ph_DoTick(result, t)
+	If Not obj\Fixed Then Ph_DoTick(result, t)
 	Return result
 End Function
 

@@ -51,17 +51,17 @@ Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
 				
 				count=count+1
 			EndIf
-			If count=>2 Then Exit
+			;If count=>2 Then Exit
 		Next
 		
 ;		Print count
 ;		Print obj1\Point[i Mod obj1\PointAnz]\Pos[0]*50+100 + ", " + obj1\Point[i Mod obj1\PointAnz]\Pos[1]*50+100 + ", " + obj1\Point[i-1]\Pos[0] + ", " + obj1\Point[i-1]\Pos[1]*50+100 
 ;		WaitKey()
 		
-		If count=>2 Then Exit
+		;If count=>2 Then Exit
 	Next
 	
-	If count=2 Then
+	If count=>2 Then
 		Local Bank = CreateBank(12)
 		
 		
