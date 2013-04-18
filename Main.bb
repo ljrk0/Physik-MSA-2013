@@ -5,6 +5,7 @@ AppTitle "MSA 2013 - Physiksimulationen in der Informatik - Copyright © 2013 by 
 Include "Help.bb"
 Include "Ph_Main.bb"
 
+Local Timer = CreateTimer(60)
 Local Testobject1.Ph_Object = New Ph_Object
 Testobject1\Pos[0] = 5.2
 Testobject1\Pos[1] = 1.2
@@ -20,11 +21,11 @@ Testobject1\RotMass = Ph_CalculateMomentOfInertia(CBox,Testobject1\Mass)
 
 
 Local Testobject2.Ph_Object = New Ph_Object
-Testobject2\Pos[0] = 5
+Testobject2\Pos[0] = 6
 Testobject2\Pos[1] = 4.2
-Testobject2\Rot =  Pi * -0.25
+Testobject2\Rot =  Pi * 0.25
 Testobject2\Mass = 10
-Testobject2\Fixed = True
+Testobject2\Fixed = False
 
 Local CBox2.Shape = Sh_CreateSquare(-0.4,-1,0.4,1)
 Testobject2\CollisionBox = CBox2
@@ -39,10 +40,16 @@ Local pos2#[1]
 
 Local LastTime# = MilliSecs()
 
+Local TimerError
 Repeat
 	
-	
-	
+	If WaitTimer(Timer)>1 Then
+		TimerError=TimerError+1
+		If TimerError = 5 Then RuntimeError "System to slow to keep 60 fp/s - Stopping Simulation caused by probapaly Inconsitents"
+	Else
+		TimerError=TimerError-1
+		If TimerError = -1 Then TimerError=0
+	EndIf
 	force1[0] = 0
 	force1[1] = 0.1
 	
@@ -62,7 +69,7 @@ Repeat
 	
 	
 	
-	Ph_DoCollision((MilliSecs()-LastTime)/1000,0.1)
+	Ph_DoCollision((MilliSecs()-LastTime)/1000,0.0001, 0)
 	
 	Ph_DoTick(Testobject1, (MilliSecs()-LastTime)/1000)
 	Ph_DoTick(Testobject2, (MilliSecs()-LastTime)/1000)

@@ -117,5 +117,29 @@ Function Ph_CreateImagefromCollisonBox(Obj.Shape)
 	Color r,g,b
 	Return Image
 End Function
+
+Function Ph_DrawImagefromCollisonBox(Obj.Shape, x, y)
+	;Local minPoint#[1]
+	;Local maxPoint#[1]
+	;Sh_GetShapeEge(Obj,minPoint,maxPoint)
+	;MultiplyVector(minPoint,100,minPoint)
+	;MultiplyVector(maxPoint,100,maxPoint)
+	;Local a#[1]
+	;SubtractVector(maxPoint,minPoint,a)
+	;MultiplyVector(minPoint,-1,a)
+	
+	Local i
+	Local r=ColorRed()
+	Local g=ColorGreen()
+	Local b=ColorBlue()
+	Color 255,0,0
+	Line Obj\Point[Obj\PointAnz-1]\Pos[0]*100,Obj\Point[Obj\PointAnz-1]\Pos[1]*100,Obj\Point[i]\Pos[0]*100,Obj\Point[i]\Pos[1]*100
+	For i = 1 To Obj\PointAnz-1
+		Line Obj\Point[i-1]\Pos[0]*100,Obj\Point[i-1]\Pos[1]*100,Obj\Point[i]\Pos[0]*100,Obj\Point[i]\Pos[1]*100
+		DebugLog Obj\Point[i-1]\Pos[0]*100
+	Next
+	SetBuffer BackBuffer()
+	Color r,g,b
+End Function
 ;~IDEal Editor Parameters:
 ;~C#Blitz3D

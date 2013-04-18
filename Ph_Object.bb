@@ -79,10 +79,11 @@ Function Ph_ApplyRotTorque(Obj.Ph_Object, Torque#)
 End Function
 
 Function Ph_Render(Obj.Ph_Object)   ; 1 m ^= 100px
-	Local temp = CopyImage(Obj\Image)
-	RotateImage temp, RadToDeg(Obj\Rot)
-	DrawImage temp,Obj\Pos[0]*100,Obj\Pos[1]*100
-	FreeImage temp
+	Ph_DrawImagefromCollisonBox(Ph_GetAbsolutCollisionBox(Obj),Obj\Pos[0]*100,Obj\Pos[1]*100)
+	;Local temp = CopyImage(Obj\Image)
+	;RotateImage temp, RadToDeg(Obj\Rot)
+	;DrawImage temp,Obj\Pos[0]*100,Obj\Pos[1]*100
+	;FreeImage temp
 End Function
 
 Function Ph_GetVirtualCopyAfterTime.Ph_Object(obj.Ph_Object,t#)
