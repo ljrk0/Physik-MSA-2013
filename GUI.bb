@@ -11,7 +11,7 @@ Function GUI()
 			Flip
 			Print"waehle die Form des Objekts!"
 			Print"0 fuer Exit, 1 fuer Rechteck, 2 fuer Kreis"
-			Input("Deine Wahl:")
+			Form$=Input("Deine Wahl:")
 		Until KeyHit (1)
 End Function
 
