@@ -4,10 +4,12 @@ AppTitle "MSA 2013 - Physiksimulationen in der Informatik - Copyright © 2013 by 
 
 Include "Help.bb"
 Include "Ph_Main.bb"
-Include "GUI.bb"
-GUI()
+;Include "GUI.bb"
 
-Local Timer = CreateTimer(30)
+
+;GUI()
+;End
+
 Local Testobject1.Ph_Object = New Ph_Object
 Testobject1\Pos[0] = 5.2
 Testobject1\Pos[1] = 1.2
@@ -40,7 +42,7 @@ Local force2#[1]
 Local pos2#[1]
 
 Local LastTime# = MilliSecs()
-
+Local Timer = CreateTimer(30)
 Local TimerError
 Repeat
 	
@@ -71,8 +73,10 @@ Repeat
 	
 	Cls
 	
-	Ph_Render(Testobject1)
-	Ph_Render(Testobject2)
+	MainPhysicRender()
+	
+;	Ph_Render(Testobject1)
+;	Ph_Render(Testobject2)
 	
 	
 	Color 255,255,0

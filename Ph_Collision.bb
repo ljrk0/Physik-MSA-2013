@@ -7,8 +7,12 @@ Function Ph_DoCollision(t#, maxabs#, k#)
 	Local Temp2#[1]
 	Local tBank
 	obj = First Ph_Object
+	If obj=Null Then Return
+	If obj\CollisionBox=Null Then Return
 	Repeat
 		obj2 = After obj
+		If obj2=Null Then Return
+		If obj2\CollisionBox=Null Then Return
 		Repeat
 			If Ph_CollideObjectAfterTime(obj, obj2, t) Then
 				Local i=1
