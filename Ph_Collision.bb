@@ -1,4 +1,4 @@
-Function Ph_DoCollision(t#, maxabs#, k#)
+Function Ph_DoCollision(t#, maxabs#, k#, recnr=0)
 	Local obj.Ph_Object
 	Local obj2.Ph_Object
 	Local virtual.Ph_Object
@@ -9,6 +9,7 @@ Function Ph_DoCollision(t#, maxabs#, k#)
 	obj = First Ph_Object
 	If obj=Null Then Return
 	If obj\CollisionBox=Null Then Return
+	Local flag=False
 	Repeat
 		obj2 = After obj
 		If obj2=Null Then Return
@@ -42,6 +43,7 @@ Function Ph_DoCollision(t#, maxabs#, k#)
 				Ph_RelativatePosition(obj2,Temp,Temp2)
 				
 				Ph_ApplyCollision(obj,obj2, Temp1, Temp2, PeekFloat(tBank,8), k)
+				flag=True
 			EndIf
 			If obj2 = Last Ph_Object Then
 				Exit
@@ -52,7 +54,7 @@ Function Ph_DoCollision(t#, maxabs#, k#)
 		obj = After obj
 		If obj = Last Ph_Object Then Exit
 	Forever
-	
+	If flag And recnr<100 Then Ph_DoCollision(t, maxabs, k, recnr+1)
 End Function
 
 Function Ph_CollideObjectAfterTime(obj1.Ph_Object, obj2.Ph_Object, t#)
