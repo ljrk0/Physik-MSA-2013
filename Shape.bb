@@ -24,6 +24,15 @@ Function Sh_CreateSquare.Shape(X1#,Y1#,X2#,Y2#)
 	Return CBox
 End Function
 
+Function Sh_CreateCycle.Shape(X#,Y#,r#)
+	Local CCyc.Shape = New Shape
+	Local i
+	For i=0 To 350 Step 10
+		Sh_AddPoint(CCyc,Sin(i)*r + X,Cos(i)*r + Y)
+	Next
+	Return CCyc
+End Function
+
 Function Sh_GetShapeEge(Obj.Shape, minPoint#[1], maxPoint#[1])
 	Local i
 	

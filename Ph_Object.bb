@@ -14,9 +14,15 @@ Type Ph_Object
 	Field CollisionBox.Shape
 	Field Virtual
 	Field Fixed
+	Field PreventFromTick
 End Type
 
 Function Ph_DoTick(Obj.Ph_Object, Time#)
+	
+	;If Obj\PreventFromTick Then
+	;	Obj\PreventFromTick =  False
+	;	Return
+	;EndIf
 	Local a#[1]
 	; Apply Acceleration to Velocity
 	

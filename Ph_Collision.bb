@@ -155,8 +155,9 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	RotateVector(obj1\Vel, (Pi/2) - angle, obj1\Vel)
 	MultiplyVector(obj1\Vel, Sin((90-RadToDeg(angle))*VectorLenght(obj1vel)), obj1\Vel)
 	
-	obj1\RotVel=obj1\RotVel-((Sin(RadToDeg(angle))*VectorLenght(obj1vel))/VectorLenght(pos_obj1))
+	obj1\RotVel=obj1\RotVel+((Sin(RadToDeg(angle))*VectorLenght(obj1vel))/VectorLenght(pos_obj1))
 	
+	obj1\PreventFromTick = True
 	; - obj2
 	
 	angle = VectorAngle( obj2vel, pos_obj2 )
@@ -165,8 +166,9 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	RotateVector(obj2\Vel, (Pi/2) - angle, obj2\Vel)
 	MultiplyVector(obj2\Vel, Sin((90-RadToDeg(angle))*VectorLenght(obj2vel)), obj2\Vel)
 	
-	obj2\RotVel=obj2\RotVel-((Sin(RadToDeg(angle))*VectorLenght(obj2vel))/VectorLenght(pos_obj2))
-		
+	obj2\RotVel=obj2\RotVel+((Sin(RadToDeg(angle))*VectorLenght(obj2vel))/VectorLenght(pos_obj2))
+	
+	obj2\PreventFromTick = True
 	
 End Function
 ;~IDEal Editor Parameters:
