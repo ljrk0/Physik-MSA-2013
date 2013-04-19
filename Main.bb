@@ -4,6 +4,8 @@ AppTitle "MSA 2013 - Physiksimulationen in der Informatik - Copyright © 2013 by 
 
 Include "Help.bb"
 Include "Ph_Main.bb"
+Include "GUI.bb"
+GUI()
 
 Local Timer = CreateTimer(30)
 Local Testobject1.Ph_Object = New Ph_Object

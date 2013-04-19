@@ -3,8 +3,8 @@ Function GUI()
 	Local Testobject1.Ph_Object = New Ph_Object
 	Local Choice$
 	Local Form$
-	Local XSize$
-	Local YSize$
+	Local XSize%
+	Local YSize%
 	Local negXSize$
 	Local negYSize$
 	WaitKey()
@@ -22,7 +22,7 @@ Function GUI()
 				Case "0" 
 					Return
 				Case "1"
-					Testobject1.Ph_Object
+					Testobject1.Ph_Object = New Ph_Object
 					Testobject1\Pos[0] = mx
 					Testobject1\Pos[1] = my
 					Print"waehle die waagerechte Geschwindigkeit!"
@@ -41,12 +41,13 @@ Function GUI()
 					Choice$=Input("Deine Wahl:")
 					Testobject1\Rot = Choice$
 					Print"waehle die x-Abmessung!"
-					XSize$=Input("Deine Wahl:")/2
-					negXSize$=XSize$*-1
+					XSize%=Int(Input("Deine Wahl:"))/2
 					Print"waehle die y-Abmessung!"
-					YSize$=Input("Deine Wahl:")/2
-					negYSize$=YSize$*-1
-					Sh_CreateSquare(negXSize$,negYSize$,XSize$,YSize$)
+					YSize%=Int(Input("Deine Wahl:"))/2
+					Testobject1\CollisionBox = Sh_CreateSquare(-XSize,-YSize,XSize,YSize)
+			End Select
+		EndIf
+	Until KeyHit(1)
 End Function
 
 ;~IDEal Editor Parameters:
