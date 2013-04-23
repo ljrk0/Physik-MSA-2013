@@ -6,17 +6,20 @@ Include "Help.bb"
 Include "Ph_Main.bb"
 ;Include "GUI.bb"
 
+Const FPS#=30
+Const tick#=1/FPS#
 
 ;GUI()
 ;End
 
 Local Testobject1.Ph_Object = New Ph_Object
-Testobject1\Pos[0] = 5.2
-Testobject1\Pos[1] = 1.2
-Testobject1\Vel[0] = 0
+Testobject1\Pos[0] = 2.8
+Testobject1\Pos[1] =1.6
+Testobject1\Vel[0] = 1
 Testobject1\Vel[1] = 1
 Testobject1\Mass = 10
 Testobject1\Rot = 0
+Testobject1\friction_velue = 0.5
 Local CBox.Shape = Sh_CreateCycle(0,0,0.5)
 Testobject1\CollisionBox = CBox
 Testobject1\Image = Ph_CreateImagefromCollisonBox(CBox)
@@ -24,11 +27,13 @@ Testobject1\RotMass = Ph_CalculateMomentOfInertia(CBox,Testobject1\Mass)
 
 
 Local Testobject2.Ph_Object = New Ph_Object
-Testobject2\Pos[0] = 6
+Testobject2\Pos[0] = 5
 Testobject2\Pos[1] = 4.2
 Testobject2\Rot =  Pi * 0.25
+Testobject2\RotVel = 0
 Testobject2\Mass = 10
 Testobject2\Fixed = False
+Testobject2\friction_velue = 0.5
 
 Local CBox2.Shape = Sh_CreateSquare(-0.4,-1,0.4,1)
 Testobject2\CollisionBox = CBox2
@@ -42,14 +47,10 @@ Local force2#[1]
 Local pos2#[1]
 
 Local LastTime# = MilliSecs()
-Local Timer = CreateTimer(30)
+Local Timer = CreateTimer(FPS)
 Local TimerError
 Repeat
-	
-	If WaitTimer(Timer)>1 Then
-		TimerError=TimerError+1
-		If TimerError = 5 Then RuntimeError "System to slow to keep 30 fp/s - Stopping Simulation causing probapaly Inconsitents"
-	EndIf
+	WaitTimer(Timer)
 	force1[0] = 0
 	force1[1] = 0.1
 	
@@ -67,7 +68,7 @@ Repeat
 	
 	;Ph_ApplyForce(Testobject1, force2, pos2)
 	
-	MainPhysicTick((MilliSecs()-LastTime)/1000)
+	MainPhysicTick(tick);(MilliSecs()-LastTime)/1000)
 	LastTime=MilliSecs()
 	
 	

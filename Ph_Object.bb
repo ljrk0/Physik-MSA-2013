@@ -12,9 +12,9 @@ Type Ph_Object
 	Field Mass#     ; kg
 	Field RotMass#  ; kg/px²
 	Field CollisionBox.Shape
-	Field Virtual
-	Field Fixed
-	Field PreventFromTick
+	Field Virtual   ; true/false
+	Field Fixed		; true/false
+	Field friction_velue# ; scalar
 End Type
 
 Function Ph_DoTick(Obj.Ph_Object, Time#)
@@ -86,6 +86,11 @@ End Function
 
 Function Ph_Render(Obj.Ph_Object)   ; 1 m ^= 100px
 	Ph_DrawImagefromCollisonBox(Ph_GetAbsolutCollisionBox(Obj),Obj\Pos[0]*100,Obj\Pos[1]*100)
+	Local temp#[1]
+	temp[0]=20
+	temp[1]=0
+	RotateVector(temp, Obj\Rot, temp)
+	Plot Obj\Pos[0]*100 + temp[0],Obj\Pos[1]*100 + temp[1]
 	;Local temp = CopyImage(Obj\Image)
 	;RotateImage temp, RadToDeg(Obj\Rot)
 	;DrawImage temp,Obj\Pos[0]*100,Obj\Pos[1]*100

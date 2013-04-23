@@ -8,7 +8,6 @@ Function MainPhysicTick(t#)
 	For obj = Each Ph_Object
 		Ph_DoTick(obj, t)
 	Next
-	;Ph_DoTick(Testobject2, (MilliSecs()-LastTime)/1000)
 End Function
 
 Function MainPhysicRender()

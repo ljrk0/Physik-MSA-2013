@@ -7,8 +7,6 @@ Function Ph_CalculateMomentOfInertia#(Obj.Shape, mass#)
 		Sum1=Sum1+Abs(VectorCrossProduct(Obj\Point[(i+1) Mod Obj\PointAnz]\Pos,Obj\Point[i]\Pos))*(VectorScalarProduct(Obj\Point[(i+1) Mod Obj\PointAnz]\Pos,Obj\Point[(i+1) Mod Obj\PointAnz]\Pos) + VectorScalarProduct(Obj\Point[(i+1) Mod Obj\PointAnz]\Pos,Obj\Point[i]\Pos) + VectorScalarProduct(Obj\Point[i]\Pos,Obj\Point[i]\Pos))
 		Sum2=Sum2+Abs(VectorCrossProduct(Obj\Point[(i+1) Mod Obj\PointAnz]\Pos,Obj\Point[i]\Pos))
 	Next
-	Print Sum1
-	Print Sum2
 	Return ((mass/6)*(Sum1/Sum2))
 End Function
 

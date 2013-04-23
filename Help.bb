@@ -46,18 +46,10 @@ End Function
 
 Function RotateVector(V1#[1],theta#,V2#[1])
 	theta = RadToDeg(theta)
-	
 	Local X#, Y#
 	X = V1[0] * Cos(theta) - V1[1] * Sin(theta)
 	Y = V1[0] * Sin(theta) + V1[1] * Cos(theta)
 	
-	;Print "------"
-	;Print theta
-	;Print V1[0]
-	;Print V1[1]
-	;Print X
-	;Print Y
-	;WaitKey
 	V2[0] = X
 	V2[1] = Y
 End Function
@@ -69,19 +61,6 @@ End Function
 Function DegToRad#(deg#)
 	Return deg*(Pi/180)
 End Function
-
-;Function IsIntersecting(a#[1], b#[1], c#[1], d#[1])
-;	Local denominator# = ((b[0] - a[0]) * (d[1] - c[1])) - ((b[1] - a[1]) * (d[0] - c[0]))
-;	Local numerator1# = ((a[1] - c[1]) * (d[0] - c[0])) - ((a[0] - c[0]) * (d[1] - c[1]))
-;	Local numerator2# = ((a[1] - c[1]) * (b[0] - a[0])) - ((a[0] - c[0]) * (b[1] - a[1]))
-;	
-;	If (denominator = 0) Then Return numerator1 = 0 And numerator2 = 0
-;	
-;	Local r# = numerator1 / denominator
-;	Local s# = numerator2 / denominator
-;	
-;    Return (r >= 0 And r <= 1) And (s >= 0 And s <= 1)
-;End Function
 
 Function lineLine(P1#[1],P2#[1],P3#[1],P4#[1], CP#[1] )
 	
