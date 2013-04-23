@@ -180,8 +180,8 @@ Function Ph_ReadFromFile(Filename$)
 		Form$ =  ReadLine(File)
 		Select Form
 			Case "square"
-				Local XSize = ReadLine(File)
-				Local YSize = ReadLine(File)
+				Local XSize# = ReadLine(File)
+				Local YSize# = ReadLine(File)
 				Obj\CollisionBox = Sh_CreateSquare(-XSize, -YSize, XSize, YSize)
 			Case "cycle"
 				Obj\CollisionBox = Sh_CreateCycle(0,0,ReadLine(File))

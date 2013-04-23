@@ -1,0 +1,31 @@
+Quellen Physicsimulation:
+--------------------------------------------------------------------------
+Semptlicher Code ist in der Programmiersprache Blitz-Basic geschriben,
+kann aber genauso (bis auf die Anzeige) auch in andere programmiersprachen
+umgeschriben werden
+
+Als Editor haben wir den auf BB angepassten Editor IDEal verwendet, zu finden auf http://www.fungamesfactory.com/ (zuletzt aufgerufen am 23.4.2013)
+
+Fuer die Teamarbeit haben wir den Code auf GitHub (https://github.com) hochgeladen. Der Code ist somit auch zu finden auf (https://github.com/CCxBlacksmith/Physic-MSA-20
+13/ - evt. aktuellerer Stand als in der Presentation verwendeter Code)
+
+--------------------------------------------------------------------------
+
+Maturarbeit - Pixel im freien Fall - Programmierung einer Physiksimulation mithilfe der Verletintegration - Penedikt Bitterli, 3BS, 2009 - zu finden auf http://www.noobody.org/Maturarbeit/Maturarbeit.pdf (zuletzt aufgerufen 23.4.2013 - 15:18 Uhr)
+
+Physicunterricht 9. / 10. Klasse von herr dr. Ebert
+
+http://de.wikipedia.org/wiki/Sto%C3%9F_(Physik) (zuletzt aufgerufen 23.4.2013 15:20 Uhr)
+
+http://en.wikipedia.org/wiki/Collision (zuletzt aufgerufen 23.4.2013 15:21 Uhr)
+
+Metzler Physik - 3. Auflage (2004) - herausgegeben von Joachim Grehn und Joachim Krause ; Schroedel Verlag GmbH, Hanofer
+
+http://de.wikipedia.org/wiki/Drehmoment (zuletzt aufgerufen 23.4.2013 15:25 Uhr)
+
+Einige Vectorfunktionen aus verschiedenen Seiten im Internet, da diese in BB nicht vorhanden sind
+
+Susanne Wiqard - mitp - Spieleprogrammierung mit DirectX 11 und C++ - 1. Auflage (2010) - Kapitel 4
+
+
+
