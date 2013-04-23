@@ -1,5 +1,10 @@
 Include "Shape.bb"
 
+;---------------------------------------------------
+;PH_CALCULATEMOMENTOFINERTIA
+; Calculates the Moment Of Ineria from a Mass and
+; a Collision-Box/Shape
+;---------------------------------------------------
 Function Ph_CalculateMomentOfInertia#(Obj.Shape, mass#)
 	Local Sum1#, Sum2#
 	Local i
@@ -10,6 +15,11 @@ Function Ph_CalculateMomentOfInertia#(Obj.Shape, mass#)
 	Return ((mass/6)*(Sum1/Sum2))
 End Function
 
+;-----------------------------------------------------
+;PH_GETABSOLUTCOLLISIONBOX
+; Transfers an CollisonBox to the gloal
+; Coordiat-System
+;-----------------------------------------------------
 Function Ph_GetAbsolutCollisionBox.Shape(obj.Ph_Object)
 	Local obj2.Shape = obj\CollisionBox ; nur zur vereinfachten Schreibweise
 	Local result.Shape = New Shape
@@ -23,10 +33,22 @@ Function Ph_GetAbsolutCollisionBox.Shape(obj.Ph_Object)
 	Return result
 End Function
 
+;-------------------------------------------------------
+;PH_RELATIVEPOSITION
+; Transfers an Global Coordinate to the objects
+; Coordination-System
+;-------------------------------------------------------
+
 Function Ph_RelativatePosition(obj.Ph_Object, P1#[1], P2#[1])
 	SubtractVector(P1,obj\Pos,P2)
 	RotateVector(P2,-obj\Rot,P2)
 End Function
+
+;------------------------------------------------------
+;PH_COLLISIONBOXCOLLIDING
+; Checks, if tow (absolute) Collisionboxes are
+; collidiong Or Not
+;------------------------------------------------------
 
 Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
 	Local i,j
@@ -89,43 +111,11 @@ Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
 	EndIf
 End Function
 
-Function Ph_CreateImagefromCollisonBox(Obj.Shape)
-	Local minPoint#[1]
-	Local maxPoint#[1]
-	Sh_GetShapeEge(Obj,minPoint,maxPoint)
-	MultiplyVector(minPoint,100,minPoint)
-	MultiplyVector(maxPoint,100,maxPoint)
-	Local a#[1]
-	SubtractVector(maxPoint,minPoint,a)
-	Local Image = CreateImage(a[0]+1,a[1]+1)
-	MultiplyVector(minPoint,-1,a)
-	HandleImage Image,a[0],a[1]
-	
-	Local i
-	SetBuffer ImageBuffer(Image)
-	Local r=ColorRed()
-	Local g=ColorGreen()
-	Local b=ColorBlue()
-	Color 255,0,0
-	Line Obj\Point[Obj\PointAnz-1]\Pos[0]*100+a[0],Obj\Point[Obj\PointAnz-1]\Pos[1]*100+a[1],Obj\Point[i]\Pos[0]*100+a[0],Obj\Point[i]\Pos[1]*100+a[1]
-	For i = 1 To Obj\PointAnz-1
-		Line Obj\Point[i-1]\Pos[0]*100+a[0],Obj\Point[i-1]\Pos[1]*100+a[1],Obj\Point[i]\Pos[0]*100+a[0],Obj\Point[i]\Pos[1]*100+a[1]
-	Next
-	SetBuffer BackBuffer()
-	Color r,g,b
-	Return Image
-End Function
-
-Function Ph_DrawImagefromCollisonBox(Obj.Shape, x, y)
-	;Local minPoint#[1]
-	;Local maxPoint#[1]
-	;Sh_GetShapeEge(Obj,minPoint,maxPoint)
-	;MultiplyVector(minPoint,100,minPoint)
-	;MultiplyVector(maxPoint,100,maxPoint)
-	;Local a#[1]
-	;SubtractVector(maxPoint,minPoint,a)
-	;MultiplyVector(minPoint,-1,a)
-	
+;----------------------------------------------
+;PH_DRAWIMAGEFROMCOLLISIONBOX
+; Draws an Collision-Box on the screen
+;----------------------------------------------
+Function Ph_DrawImagefromCollisonBox(Obj.Shape)
 	Local i
 	Local r=ColorRed()
 	Local g=ColorGreen()

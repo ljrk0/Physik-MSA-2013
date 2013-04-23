@@ -7,6 +7,10 @@ Type Point
 	Field Pos#[1]
 End Type
 
+;-------------------------------------------
+;SH_ADDPOINT
+; Adds an Point to an existing Shape
+;-------------------------------------------
 Function Sh_AddPoint(Obj.Shape,X#,Y#)
 	Obj\Point[Obj\PointAnz]=New Point
 	Obj\Point[Obj\PointAnz]\Pos[0]=X
@@ -15,6 +19,10 @@ Function Sh_AddPoint(Obj.Shape,X#,Y#)
 	
 End Function
 
+;-------------------------------------------
+;SH_CREATESQUARE
+;Crates an new Shape with an Sqyare
+;-------------------------------------------
 Function Sh_CreateSquare.Shape(X1#,Y1#,X2#,Y2#)
 	Local CBox.Shape = New Shape
 	Sh_AddPoint(CBox,X1,Y1)
@@ -24,6 +32,10 @@ Function Sh_CreateSquare.Shape(X1#,Y1#,X2#,Y2#)
 	Return CBox
 End Function
 
+;-------------------------------------------
+;SH_CREATECYCLE
+;Creates an new Shapw with an Cycle
+;-------------------------------------------
 Function Sh_CreateCycle.Shape(X#,Y#,r#)
 	Local CCyc.Shape = New Shape
 	Local i
@@ -33,6 +45,11 @@ Function Sh_CreateCycle.Shape(X#,Y#,r#)
 	Return CCyc
 End Function
 
+;---------------------------------------------
+;SH_GETSHAPEEGE
+; gets the Minimum and Maximum Points of the
+;Shape
+;---------------------------------------------
 Function Sh_GetShapeEge(Obj.Shape, minPoint#[1], maxPoint#[1])
 	Local i
 	

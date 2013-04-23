@@ -17,12 +17,15 @@ Type Ph_Object
 	Field friction_velue# ; scalar
 End Type
 
+;------------------------------------------------------------
+; PH_DOTICK
+; Calulates basic Tick-Relevated things like acceleration,
+;	velocity and Position
+;-------------------------------------------------------------
+
+
 Function Ph_DoTick(Obj.Ph_Object, Time#)
 	
-	;If Obj\PreventFromTick Then
-	;	Obj\PreventFromTick =  False
-	;	Return
-	;EndIf
 	Local a#[1]
 	; Apply Acceleration to Velocity
 	
@@ -43,6 +46,12 @@ Function Ph_DoTick(Obj.Ph_Object, Time#)
 	Obj\Acc[1] = 0
 	Obj\RotAcc = 0
 End Function
+
+;----------------------------------------------------------
+;PH_APPLYFORCE
+;Applys an Force at a point of an object - use this to
+; apply Forces
+;----------------------------------------------------------
 
 Function Ph_ApplyForce(Obj.Ph_Object, Force#[1], approach#[1], Relative = True)
 	If Obj\Fixed Then Return
@@ -72,6 +81,11 @@ Function Ph_ApplyForce(Obj.Ph_Object, Force#[1], approach#[1], Relative = True)
 	
 End Function
 
+;-------------------------------------------------------
+;PH_APPLYVELFORCE
+;Applyes an Force, that directly cause an Acceleration
+;-------------------------------------------------------
+
 Function Ph_ApplyVelForce(Obj.Ph_Object, Force#[1])
 	If Obj\Fixed Then Return
 	Local a#[1]
@@ -79,23 +93,37 @@ Function Ph_ApplyVelForce(Obj.Ph_Object, Force#[1])
 	AddVector(Obj\Acc,a,Obj\Acc)
 End Function
 
+;-------------------------------------------------------
+; PH_APPLYROTTORQUE
+; Applys an Torque to an Object
+;-------------------------------------------------------
+
 Function Ph_ApplyRotTorque(Obj.Ph_Object, Torque#)
 	If Obj\Fixed Then Return
 	Obj\RotAcc=Obj\RotAcc+Torque/Obj\RotMass
 End Function
 
+;-------------------------------------------------------
+; PH_RENDER
+; Draws the Object on the Screen
+;-------------------------------------------------------
+
 Function Ph_Render(Obj.Ph_Object)   ; 1 m ^= 100px
-	Ph_DrawImagefromCollisonBox(Ph_GetAbsolutCollisionBox(Obj),Obj\Pos[0]*100,Obj\Pos[1]*100)
+	Ph_DrawImagefromCollisonBox(Ph_GetAbsolutCollisionBox(Obj))
 	Local temp#[1]
 	temp[0]=20
 	temp[1]=0
+	Color 100,100,255
+	Plot Obj\Pos[0]*100,Obj\Pos[1]*100
+	Color 255,255,0
 	RotateVector(temp, Obj\Rot, temp)
 	Plot Obj\Pos[0]*100 + temp[0],Obj\Pos[1]*100 + temp[1]
-	;Local temp = CopyImage(Obj\Image)
-	;RotateImage temp, RadToDeg(Obj\Rot)
-	;DrawImage temp,Obj\Pos[0]*100,Obj\Pos[1]*100
-	;FreeImage temp
 End Function
+
+;----------------------------------------------------------
+; PH_GETVIRTUALCOPYAFTERTIME
+; Copyses an Object needed for Collision-Check
+;----------------------------------------------------------
 
 Function Ph_GetVirtualCopyAfterTime.Ph_Object(obj.Ph_Object,t#)
 	Local result.Ph_Object = New Ph_Object
@@ -115,6 +143,62 @@ Function Ph_GetVirtualCopyAfterTime.Ph_Object(obj.Ph_Object,t#)
 	
 	If Not obj\Fixed Then Ph_DoTick(result, t)
 	Return result
+End Function
+
+;-----------------------------------------------------------
+; PH_READFROMFILE
+; Reads Szene form a File
+; -----------------------
+;  File Structure:
+;  /----------------\
+;  |[Beliebig]		|
+;  |square/cycle	|
+;  |if square: XSize|
+;  |		   YSize|
+;  |if cycle: radius|
+;  |XPos			|
+;  |YPos			|
+;  |XVel			|
+;  |YVel			|
+;  |Rot				|
+;  |RotVel			|
+;  |Mass			|
+;  |fruction_value	|
+;  |[Beliebig]		|
+;  |[... Obj2 ...]  |
+;  |[...]			|
+;  \----------------/
+;-----------------------------------------------------------
+
+
+Function Ph_ReadFromFile(Filename$)	
+	Local File = ReadFile (Filename)
+	Local Form$
+	While Not Eof(File)
+		Local Obj.Ph_Object = New Ph_Object
+		ReadLine(File)
+		Form$ =  ReadLine(File)
+		Select Form
+			Case "square"
+				Local XSize = ReadLine(File)
+				Local YSize = ReadLine(File)
+				Obj\CollisionBox = Sh_CreateSquare(-XSize, -YSize, XSize, YSize)
+			Case "cycle"
+				Obj\CollisionBox = Sh_CreateCycle(0,0,ReadLine(File))
+			Default
+				RuntimeError "Object Form " + Form + " unknown"
+		End Select
+		Obj\Pos[0] = ReadLine(File)
+		Obj\Pos[1] = ReadLine(File)
+		Obj\Vel[0] = ReadLine(File)
+		Obj\Vel[1] = ReadLine(File)
+		Obj\Rot = ReadLine(File)
+		Obj\RotVel = ReadLine(File)
+		Obj\Mass = ReadLine(File)
+		Obj\RotMass = Ph_CalculateMomentOfInertia(Obj\CollisionBox,Obj\Mass)
+		Obj\friction_velue = ReadLine(File)
+	Wend
+	
 End Function
 
 ;~IDEal Editor Parameters:

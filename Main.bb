@@ -2,7 +2,7 @@ Graphics 800,600,0,6
 SetBuffer BackBuffer()
 AppTitle "MSA 2013 - Physiksimulationen in der Informatik - Copyright © 2013 by Jochen Jacobs & Leonard Robert Koenig"
 
-Include "Help.bb"
+
 Include "Ph_Main.bb"
 ;Include "GUI.bb"
 
@@ -12,34 +12,35 @@ Const tick#=1/FPS#
 ;GUI()
 ;End
 
-Local Testobject1.Ph_Object = New Ph_Object
-Testobject1\Pos[0] = 2.8
-Testobject1\Pos[1] =1.6
-Testobject1\Vel[0] = 1
-Testobject1\Vel[1] = 1
-Testobject1\Mass = 10
-Testobject1\Rot = 0
-Testobject1\friction_velue = 0.5
-Local CBox.Shape = Sh_CreateCycle(0,0,0.5)
-Testobject1\CollisionBox = CBox
-Testobject1\Image = Ph_CreateImagefromCollisonBox(CBox)
-Testobject1\RotMass = Ph_CalculateMomentOfInertia(CBox,Testobject1\Mass)
+;Local Testobject1.Ph_Object = New Ph_Object
+;Testobject1\Pos[0] = 2.8
+;Testobject1\Pos[1] =1.6
+;Testobject1\Vel[0] = 1
+;Testobject1\Vel[1] = 1
+;Testobject1\Mass = 10
+;Testobject1\Rot = 0
+;Testobject1\friction_velue = 0.5
+;Local CBox.Shape = Sh_CreateCycle(0,0,0.5)
+;Testobject1\CollisionBox = CBox
+;Testobject1\Image = Ph_CreateImagefromCollisonBox(CBox)
+;Testobject1\RotMass = Ph_CalculateMomentOfInertia(CBox,Testobject1\Mass)
 
 
-Local Testobject2.Ph_Object = New Ph_Object
-Testobject2\Pos[0] = 5
-Testobject2\Pos[1] = 4.2
-Testobject2\Rot =  Pi * 0.25
-Testobject2\RotVel = 0
-Testobject2\Mass = 10
-Testobject2\Fixed = False
-Testobject2\friction_velue = 0.5
+;Local Testobject2.Ph_Object = New Ph_Object
+;Testobject2\Pos[0] = 5
+;Testobject2\Pos[1] = 4.2
+;Testobject2\Rot =  Pi * 0.25
+;Testobject2\RotVel = 0
+;Testobject2\Mass = 10
+;Testobject2\Fixed = False
+;Testobject2\friction_velue = 0.5
 
-Local CBox2.Shape = Sh_CreateSquare(-0.4,-1,0.4,1)
-Testobject2\CollisionBox = CBox2
-Testobject2\Image = Ph_CreateImagefromCollisonBox(CBox2)
-Testobject2\RotMass = Ph_CalculateMomentOfInertia(CBox2,Testobject1\Mass)
+;Local CBox2.Shape = Sh_CreateSquare(-0.4,-1,0.4,1)
+;Testobject2\CollisionBox = CBox2
+;Testobject2\Image = Ph_CreateImagefromCollisonBox(CBox2)
+;Testobject2\RotMass = Ph_CalculateMomentOfInertia(CBox2,Testobject1\Mass)
 
+Ph_ReadFromFile("BallOnSquare.phS")
 
 Local force1#[1]
 Local pos1#[1]
