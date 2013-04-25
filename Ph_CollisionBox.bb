@@ -60,7 +60,7 @@ Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
 	Cls
 	For i=1 To obj1\PointAnz
 		For j=1 To obj2\PointAnz
-			If lineLine(obj1\Point[i Mod obj1\PointAnz]\Pos, obj1\Point[i-1]\Pos, obj2\Point[j Mod obj2\PointAnz]\Pos, obj2\Point[j-1]\Pos, temp) Then
+			If LineLine(obj1\Point[i Mod obj1\PointAnz]\Pos, obj1\Point[i-1]\Pos, obj2\Point[j Mod obj2\PointAnz]\Pos, obj2\Point[j-1]\Pos, temp) Then
 				If count=0 Then
 					Pos0[0] = temp[0]
 					Pos0[1] = temp[1]
@@ -71,18 +71,11 @@ Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
 				
 				count=count+1
 			EndIf
-			;If count=>2 Then Exit
 		Next
-		
-;		Print count
-;		Print obj1\Point[i Mod obj1\PointAnz]\Pos[0]*50+100 + ", " + obj1\Point[i Mod obj1\PointAnz]\Pos[1]*50+100 + ", " + obj1\Point[i-1]\Pos[0] + ", " + obj1\Point[i-1]\Pos[1]*50+100 
-;		WaitKey()
-		
-		;If count=>2 Then Exit
 	Next
-	
+	Local Bank
 	If count=>2 Then
-		Local Bank = CreateBank(12)
+		Bank = CreateBank(12)
 		
 		
 		
@@ -98,15 +91,25 @@ Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
 		
 		
 		SubtractVector(Pos1,Pos0,temp)
+		If VectorLenght(temp)=0 Then Return 0
 		PokeFloat Bank, 8, VectorAngle(temp,temp2)
 		
-		
-		
-		
-		
-		
 		Return Bank
-	Else 
+;	Else If count=1
+;		Bank = CreateBank(12)
+		
+;		PokeFloat Bank, 0, Pos0[0]
+;		PokeFloat Bank, 4, Pos0[1]
+		
+;		temp2[0]=1
+;		temp2[1]=0
+		
+;		SubtractVector(Pos1,Pos0,temp)
+;		If VectorLenght(temp)=0 Then Return 0
+;		PokeFloat Bank, 8, VectorAngle(temp,temp2)
+		
+;		Return Bank
+	Else
 		Return 0
 	EndIf
 End Function
@@ -124,7 +127,7 @@ Function Ph_DrawImagefromCollisonBox(Obj.Shape)
 	Line Obj\Point[Obj\PointAnz-1]\Pos[0]*100,Obj\Point[Obj\PointAnz-1]\Pos[1]*100,Obj\Point[i]\Pos[0]*100,Obj\Point[i]\Pos[1]*100
 	For i = 1 To Obj\PointAnz-1
 		Line Obj\Point[i-1]\Pos[0]*100,Obj\Point[i-1]\Pos[1]*100,Obj\Point[i]\Pos[0]*100,Obj\Point[i]\Pos[1]*100
-		DebugLog Obj\Point[i-1]\Pos[0]*100
+		;DebugLog Obj\Point[i-1]\Pos[0]*100
 	Next
 	SetBuffer BackBuffer()
 	Color r,g,b

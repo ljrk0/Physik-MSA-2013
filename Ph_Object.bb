@@ -15,6 +15,8 @@ Type Ph_Object
 	Field Virtual   ; true/false
 	Field Fixed		; true/false
 	Field friction_velue# ; scalar
+	Field FixedPos#[1], FixedRot#
+	Field maxTick# ;true/false
 End Type
 
 ;------------------------------------------------------------
@@ -25,6 +27,19 @@ End Type
 
 
 Function Ph_DoTick(Obj.Ph_Object, Time#)
+	If Obj\maxTick < Time And Obj\maxTick > 0 Then Time = Obj\maxTick
+	Obj\maxTick=0
+	
+	If Obj\Fixed Then
+		Obj\Vel[0] = 0
+		Obj\Vel[1] = 0
+		Obj\RotVel = 0
+		; reset Acceleration
+		Obj\Acc[0] = 0
+		Obj\Acc[1] = 0
+		Obj\RotAcc = 0
+		Return
+	EndIf
 	
 	Local a#[1]
 	; Apply Acceleration to Velocity
@@ -40,8 +55,7 @@ Function Ph_DoTick(Obj.Ph_Object, Time#)
 	
 	AddVector(Obj\Pos,a,Obj\Pos)
 	Obj\Rot=Obj\Rot+Obj\RotVel*Time
-	
-    ; reset Acceleration
+	; reset Acceleration
 	Obj\Acc[0] = 0
 	Obj\Acc[1] = 0
 	Obj\RotAcc = 0
@@ -54,7 +68,6 @@ End Function
 ;----------------------------------------------------------
 
 Function Ph_ApplyForce(Obj.Ph_Object, Force#[1], approach#[1], Relative = True)
-	If Obj\Fixed Then Return
 	If Relative Then
 		RotateVector(Force,Obj\Rot,Force)
 		RotateVector(approach,Obj\Rot,approach)
@@ -87,7 +100,6 @@ End Function
 ;-------------------------------------------------------
 
 Function Ph_ApplyVelForce(Obj.Ph_Object, Force#[1])
-	If Obj\Fixed Then Return
 	Local a#[1]
 	DivideVector(Force,Obj\Mass, a)
 	AddVector(Obj\Acc,a,Obj\Acc)
@@ -99,7 +111,6 @@ End Function
 ;-------------------------------------------------------
 
 Function Ph_ApplyRotTorque(Obj.Ph_Object, Torque#)
-	If Obj\Fixed Then Return
 	Obj\RotAcc=Obj\RotAcc+Torque/Obj\RotMass
 End Function
 
@@ -141,7 +152,7 @@ Function Ph_GetVirtualCopyAfterTime.Ph_Object(obj.Ph_Object,t#)
 	result\Vel[1] = obj\Vel[1]
 	result\Virtual = True
 	
-	If Not obj\Fixed Then Ph_DoTick(result, t)
+	Ph_DoTick(result, t)
 	Return result
 End Function
 
@@ -164,6 +175,7 @@ End Function
 ;  |RotVel			|
 ;  |Mass			|
 ;  |fruction_value	|
+;  |fixed [0|1]     |
 ;  |[Beliebig]		|
 ;  |[... Obj2 ...]  |
 ;  |[...]			|
@@ -186,7 +198,8 @@ Function Ph_ReadFromFile(Filename$)
 			Case "cycle"
 				Obj\CollisionBox = Sh_CreateCycle(0,0,ReadLine(File))
 			Default
-				RuntimeError "Object Form " + Form + " unknown"
+				Delete Obj
+				Return
 		End Select
 		Obj\Pos[0] = ReadLine(File)
 		Obj\Pos[1] = ReadLine(File)
@@ -197,6 +210,12 @@ Function Ph_ReadFromFile(Filename$)
 		Obj\Mass = ReadLine(File)
 		Obj\RotMass = Ph_CalculateMomentOfInertia(Obj\CollisionBox,Obj\Mass)
 		Obj\friction_velue = ReadLine(File)
+		Obj\Fixed = ReadLine(File)
+		If Obj\Fixed Then
+			Obj\FixedPos[0]=Obj\Pos[0]
+			Obj\FixedPos[1]=Obj\Pos[1]
+			Obj\FixedRot=Obj\Rot
+		EndIf
 	Wend
 	
 End Function

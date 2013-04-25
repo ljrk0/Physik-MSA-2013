@@ -1,4 +1,9 @@
-Function Ph_DoCollision(t#, maxabs#, k#, recnr=0)
+;------------------------------------------------
+;PH_DOCOLLISION
+; Checks for Collision calls the CollisonApplying
+;------------------------------------------------
+
+Function Ph_DoCollision(t#, maxabs#, recnr=0)
 	Local obj.Ph_Object
 	Local obj2.Ph_Object
 	Local virtual.Ph_Object
@@ -12,8 +17,8 @@ Function Ph_DoCollision(t#, maxabs#, k#, recnr=0)
 	Local flag=False
 	Repeat
 		obj2 = After obj
-		If obj2=Null Then Return
-		If obj2\CollisionBox=Null Then Return
+		If obj2=Null Then Exit
+		If obj2\CollisionBox=Null Then Exit
 		Repeat
 			If Ph_CollideObjectAfterTime(obj, obj2, t) Then
 				Local i=1
@@ -37,13 +42,18 @@ Function Ph_DoCollision(t#, maxabs#, k#, recnr=0)
 				Temp[0] = PeekFloat(tBank,0)
 				Temp[1] = PeekFloat(tBank,4)
 				
-				Ph_DoTick(obj, t*lt)
-				Ph_DoTick(obj2, t*lt)
+				CollisonPointTemp[0] = Temp[0]
+				CollisonPointTemp[1] = Temp[1]
+				
+				;Ph_DoTick(obj, t*lt-0.0001)
+				;Ph_DoTick(obj2, t*lt-0.0001)
+				;obj\maxTick = t*lt
+				;obj2\maxTick = t*lt
 				
 				Ph_RelativatePosition(obj,Temp,Temp1)
 				Ph_RelativatePosition(obj2,Temp,Temp2)
 				
-				Ph_ApplyCollision(obj,obj2, Temp1, Temp2, PeekFloat(tBank,8), k, t)
+				Ph_ApplyCollision(obj,obj2, Temp1, Temp2, PeekFloat(tBank,8), t)
 				flag=True
 			EndIf
 			If obj2 = Last Ph_Object Then
@@ -55,12 +65,14 @@ Function Ph_DoCollision(t#, maxabs#, k#, recnr=0)
 		obj = After obj
 		If obj = Last Ph_Object Then Exit
 	Forever
-;	MainPhysicRender()
-;	Flip
-;	WaitKey()
-	If flag And recnr<100 Then Ph_DoCollision(t, maxabs, k, recnr+1)
+	If flag And recnr<100 Then Ph_DoCollision(t, maxabs, recnr+1)
 End Function
 
+;-------------------------------------------------------------
+;PH_COLLIDEOBJECTAFTERTIME
+;Returns a Bank with the Collision-Information at t after now
+; if the Bank is 0 there is no collision
+;-------------------------------------------------------------
 Function Ph_CollideObjectAfterTime(obj1.Ph_Object, obj2.Ph_Object, t#)
 	Local virtual1.Ph_Object = Ph_GetVirtualCopyAfterTime(obj1,t)
 	Local virtual2.Ph_Object = Ph_GetVirtualCopyAfterTime(obj2,t)
@@ -77,9 +89,13 @@ Function Ph_CollideObjectAfterTime(obj1.Ph_Object, obj2.Ph_Object, t#)
 	Return rBank
 End Function
 
-Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2#[1], angle#, k#, t#)
+;------------------------------------------------------------------
+;PH_APPLYCOLLISION
+; Applys an Collision using Forces
+;------------------------------------------------------------------
+
+Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2#[1], angle#, t#)
 	; TODO Apply the Collision Forces / Stoesse
-	
 	Local PVel1#[1], PVel2#[1]
 	
 	RotateVector(pos_obj1,obj1\RotVel,PVel1)
@@ -112,11 +128,15 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	temp[0]=1
 	temp[1]=0	
 	
+	
 	If VectorLenght(PVel1) = 0 Then Temp1 = 0 Else Temp1=Sin(90-RadToDeg(VectorAngle(PVel1,temp)-angle))*VectorLenght(PVel1)
 	If VectorLenght(PVel2) = 0 Then Temp2 = 0 Else Temp2=Sin(90-RadToDeg(VectorAngle(PVel2,temp)-angle))*VectorLenght(PVel2)
 	
+	
 	MultiplyVector(obj1velUB, Temp1, obj1velUB)
 	MultiplyVector(obj2velUB, Temp2, obj2velUB)
+	
+	;If VectorLenght(obj2velUB) <> 0 Then Stop
 	
 	; Berechung der beeinflussten Teile der Geschwindigkeit (vel2)
 	
@@ -140,46 +160,38 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	
 	;- obj1
 	
-	If VectorLenght(obj1velUB)<>0 Then
-		angle = VectorAngle(pos_obj1, obj1velUB)
-		obj1\Vel[0]=1
-		obj1\Vel[1]=0
-		RotateVector(obj1\Vel, (Pi/2) - angle, obj1\Vel)
-		MultiplyVector(obj1\Vel, Sin((90-RadToDeg(angle))*VectorLenght(obj1velUB)), obj1\Vel)
-		obj1\RotVel=obj1\RotVel+((Sin(RadToDeg(angle))*VectorLenght(obj1velUB))/VectorLenght(pos_obj1))
+		; Reibung berechnen - fehler : nur fuer ein Festes objet diffiniert!
+	
+	If Not obj1\Fixed Then
+		SubtractVector(obj1velUB, obj2velUB, temp)
+		MultiplyVector(temp, obj1\Mass * (obj1\friction_velue + obj2\friction_velue) / 2 * -1 / t, temp)
+		Ph_ApplyForce(obj1,temp,pos_obj1, False)
+	EndIf
+	If Not obj2\Fixed Then
+		SubtractVector(obj2velUB, obj1velUB, temp)
+		MultiplyVector(temp, obj2\Mass * (obj1\friction_velue + obj2\friction_velue) / 2 * -1 / t, temp)
+		Ph_ApplyForce(obj2,temp,pos_obj2, False)
+;		DebugLog pos_obj1[0] + ", " + pos_obj1[1]
 	EndIf
 	
-	; - obj2
-	
-	If VectorLenght(obj2velUB)<>0 Then
-		angle = VectorAngle( obj2velUB, pos_obj2 )
-		obj2\Vel[0]=1
-		obj2\Vel[1]=0
-		RotateVector(obj2\Vel, (Pi/2) - angle, obj2\Vel)
-		MultiplyVector(obj2\Vel, Sin((90-RadToDeg(angle))*VectorLenght(obj2velUB)), obj2\Vel)
-		obj2\RotVel=obj2\RotVel+((Sin(RadToDeg(angle))*VectorLenght(obj2velUB))/VectorLenght(pos_obj2))
-	EndIf
+	obj1\Vel[0] = obj1velUB[0]
+	obj1\Vel[1] = obj1velUB[1]
+	obj2\Vel[0] = obj2velUB[0]
+	obj2\Vel[1] = obj2velUB[1]
 		
-	; berechnung der Stosses
+	; berechnung des Stosses
 	
-	MultiplyVector(obj1velB, obj1\Mass / t, temp)
-	Ph_ApplyForce(obj2, temp, pos_obj2)
+	If Not obj2\Fixed Then
+		MultiplyVector(obj1velB, obj1\Mass / t, temp)
+		Ph_ApplyForce(obj2, temp, pos_obj2)
+	EndIf
+	If Not obj1\Fixed Then
+		MultiplyVector(obj2velB, obj2\Mass / t, temp)
+		Ph_ApplyForce(obj1, temp, pos_obj1)
+	EndIf
 	
-	MultiplyVector(obj2velB, obj2\Mass / t, temp)
-	Ph_ApplyForce(obj1, temp, pos_obj1)
-	
-	; Reibung berechnen
-	
-	MultiplyVector(obj1velUB, obj1\Mass / t, temp)
-	MultiplyVector(temp, (obj1\friction_velue+obj2\friction_velue)/2, temp)
-	MultiplyVector(temp, -1, temp)
-	Ph_ApplyForce(obj2, temp, pos_obj2)
-	
-	MultiplyVector(obj2velB, obj2\Mass / t, temp)
-	MultiplyVector(temp, (obj1\friction_velue+obj2\friction_velue)/2, temp)
-	MultiplyVector(temp, -1, temp)
-	Ph_ApplyForce(obj1, temp, pos_obj1)
-	
+	DebugLog obj2velUB[0] + ", " + obj2velUB[0]
+	;Print angle : WaitKey()
 End Function
 ;~IDEal Editor Parameters:
 ;~C#Blitz3D

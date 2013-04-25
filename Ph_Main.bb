@@ -8,8 +8,8 @@ Include "Ph_Collision.bb"
 ;-----------------------------------------------------
 
 Function MainPhysicTick(t#)
-	Ph_DoCollision(t,0.0001, 0.5)
 	Local obj.Ph_Object
+	Ph_DoCollision(t,0.000000001)
 	For obj = Each Ph_Object
 		Ph_DoTick(obj, t)
 	Next
@@ -25,6 +25,7 @@ Function MainPhysicRender()
 	For obj = Each Ph_Object
 		If obj\CollisionBox <> Null Then Ph_Render(obj)
 	Next
+	Local o.Ph_Object = First Ph_Object
 End Function
 ;~IDEal Editor Parameters:
 ;~C#Blitz3D
