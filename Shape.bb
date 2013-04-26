@@ -21,7 +21,7 @@ End Function
 
 ;-------------------------------------------
 ;SH_CREATESQUARE
-;Crates a new shape with a square                       ???was soll das heißen: vorschlag out of -> erstellt einen neues Rechteck als Shape
+;Crates a new shape as a square                  
 ;-------------------------------------------
 Function Sh_CreateSquare.Shape(X1#,Y1#,X2#,Y2#)
 	Local CBox.Shape = New Shape
@@ -34,7 +34,7 @@ End Function
 
 ;-------------------------------------------
 ;SH_CREATECYCLE
-;Creates a new Shape with a cycle                     ???was soll das heißen: vorschlag out of -> Sihe oben
+;Creates a new Shape as a cycle                    
 ;-------------------------------------------
 Function Sh_CreateCycle.Shape(X#,Y#,r#)
 	Local CCyc.Shape = New Shape
@@ -47,8 +47,8 @@ End Function
 
 ;---------------------------------------------
 ;SH_GETSHAPEEGE
-; gets the minimum and maximum Points of the              !!!maximum number of oder was soll das heißen? -> Punkt oben links und punkt unten rechts, wenn man ein rechteck um das Shape packt
-;Shape
+;Gets the minimum and maximum Points of the            
+;shape
 ;---------------------------------------------
 Function Sh_GetShapeEge(Obj.Shape, minPoint#[1], maxPoint#[1])
 	Local i

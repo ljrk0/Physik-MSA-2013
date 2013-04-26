@@ -2,8 +2,8 @@ Include "Shape.bb"
 
 ;---------------------------------------------------
 ;PH_CALCULATEMOMENTOFINERTIA
-; Calculates the moment of Inerita from a Mass and
-; a Collision-Box/Shape
+; Calculates the moment of inertia from a mass and
+; a Collision-box/Shape
 ;---------------------------------------------------
 Function Ph_CalculateMomentOfInertia#(Obj.Shape, mass#)
 	Local Sum1#, Sum2#
@@ -36,7 +36,7 @@ End Function
 ;-------------------------------------------------------
 ;PH_RELATIVEPOSITION
 ; Transfers a global coordinate to the objects
-; coordinate system                                                    ???coordination-system-->einfach ZUUU geil--> koordinierendes-system ->wie denn sonst? ^^
+; coordinate system
 ;-------------------------------------------------------
 
 Function Ph_RelativatePosition(obj.Ph_Object, P1#[1], P2#[1])

@@ -21,7 +21,7 @@ End Type
 
 ;------------------------------------------------------------
 ; PH_DOTICK
-; Calculates basic Tick-Relevated things like acceleration,           ???wassoll das heißen? -> Berechnet alle dinge, die jeden Tick passieren wie z.B. neue Geschwindigkeit mittels der Beschleuigung etc. 
+; Calculates basic tick-related things eg. acceleration,           ???wassoll das heißen? -> Berechnet alle dinge, die jeden Tick passieren wie z.B. neue Geschwindigkeit mittels der Beschleuigung etc. 
 ;	velocity and Position
 ;-------------------------------------------------------------
 
@@ -42,14 +42,14 @@ Function Ph_DoTick(Obj.Ph_Object, Time#)
 	EndIf
 	
 	Local a#[1]
-	; Apply Acceleration to Velocity        ???kleinschreiben -> oh ja
+	; Apply acceleration to velocity 
 	
 	MultiplyVector(Obj\Acc, Time, a)
 	
 	AddVector(Obj\Vel,a,Obj\Vel)
 	Obj\RotVel=Obj\RotVel+Obj\RotAcc*Time
 	
-	; Apply Velocity to Position
+	; Apply velocity to position
 	
 	MultiplyVector(Obj\Vel, Time, a)
 	
@@ -63,8 +63,8 @@ End Function
 
 ;----------------------------------------------------------
 ;PH_APPLYFORCE
-;Applys a force at a point of an object - use this to            ???was soll das heißen? -> Wirkt eine Kraft auf das Objekt an einem bestimmten punkt
-; apply Forces
+;Applys a force at a point of an object - use this to
+; apply forces
 ;----------------------------------------------------------
 
 Function Ph_ApplyForce(Obj.Ph_Object, Force#[1], approach#[1], Relative = True)
@@ -133,7 +133,7 @@ End Function
 
 ;----------------------------------------------------------
 ; PH_GETVIRTUALCOPYAFTERTIME
-; Copys an object needed for Collision-Checking
+; Copys an object needed for collision-checking
 ;----------------------------------------------------------
 
 Function Ph_GetVirtualCopyAfterTime.Ph_Object(obj.Ph_Object,t#)
@@ -158,7 +158,7 @@ End Function
 
 ;-----------------------------------------------------------
 ; PH_READFROMFILE
-; Reads Szene from a file
+; Reads scene from a file
 ; -----------------------
 ;  File Structure:
 ;  /----------------\
