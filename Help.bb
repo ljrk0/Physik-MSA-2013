@@ -113,7 +113,7 @@ Function LineLine(p0#[1], p1#[1], p2#[1], p3#[1], result#[1])
 			End If
 		End If
 		
-		; Lines didn't cross, because the intersection was beyond the endpoints of the lines              ??Zeit???
+		; Lines didn't cross, because the intersection was beyond the endpoints of the lines              ??Zeit??? - wat hat das mit Zeit zu tun?
 	EndIf
 	
 	; Lines do not cross!

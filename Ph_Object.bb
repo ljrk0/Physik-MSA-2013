@@ -21,7 +21,7 @@ End Type
 
 ;------------------------------------------------------------
 ; PH_DOTICK
-; Calculates basic Tick-Relevated things like acceleration,           ???wassoll das heißen?
+; Calculates basic Tick-Relevated things like acceleration,           ???wassoll das heißen? -> Berechnet alle dinge, die jeden Tick passieren wie z.B. neue Geschwindigkeit mittels der Beschleuigung etc. 
 ;	velocity and Position
 ;-------------------------------------------------------------
 
@@ -42,7 +42,7 @@ Function Ph_DoTick(Obj.Ph_Object, Time#)
 	EndIf
 	
 	Local a#[1]
-	; Apply Acceleration to Velocity        ???kleinschreiben
+	; Apply Acceleration to Velocity        ???kleinschreiben -> oh ja
 	
 	MultiplyVector(Obj\Acc, Time, a)
 	
@@ -63,7 +63,7 @@ End Function
 
 ;----------------------------------------------------------
 ;PH_APPLYFORCE
-;Applys a force at a point of an object - use this to            ???was soll das heißen?
+;Applys a force at a point of an object - use this to            ???was soll das heißen? -> Wirkt eine Kraft auf das Objekt an einem bestimmten punkt
 ; apply Forces
 ;----------------------------------------------------------
 

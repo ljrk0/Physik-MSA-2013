@@ -26,7 +26,7 @@ Repeat
 	force2[0] = 0
 	force2[1] = 5
 	
-;	Ph_ApplyForce(Obj, force2, pos2, False)
+	Ph_ApplyForce(Obj, force2, pos2, False)
 	
 ;	DebugLog Obj\Vel[0] + ", " + Obj\Vel[1]
 	

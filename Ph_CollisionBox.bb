@@ -17,7 +17,7 @@ End Function
 
 ;-----------------------------------------------------
 ;PH_GETABSOLUTCOLLISIONBOX
-; Transfers an CollisonBox to the gloal           ???soll großgeschrieben (Transfers, weil eig. klein)
+; Transfers an CollisonBox to the gloal           ???soll großgeschrieben (Transfers, weil eig. klein) -> dat is informatik
 ; coordinate system
 ;-----------------------------------------------------
 Function Ph_GetAbsolutCollisionBox.Shape(obj.Ph_Object)
@@ -36,7 +36,7 @@ End Function
 ;-------------------------------------------------------
 ;PH_RELATIVEPOSITION
 ; Transfers a global coordinate to the objects
-; coordinate system                                                    ???coordination-system-->einfach ZUUU geil--> koordinierendes-system
+; coordinate system                                                    ???coordination-system-->einfach ZUUU geil--> koordinierendes-system ->wie denn sonst? ^^
 ;-------------------------------------------------------
 
 Function Ph_RelativatePosition(obj.Ph_Object, P1#[1], P2#[1])
