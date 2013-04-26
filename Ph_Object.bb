@@ -14,14 +14,14 @@ Type Ph_Object
 	Field CollisionBox.Shape
 	Field Virtual   ; true/false
 	Field Fixed		; true/false
-	Field friction_velue# ; scalar
+	Field friction_velue# ; scalar            !!!value
 	Field FixedPos#[1], FixedRot#
 	Field maxTick# ;true/false
 End Type
 
 ;------------------------------------------------------------
 ; PH_DOTICK
-; Calulates basic Tick-Relevated things like acceleration,
+; Calculates basic Tick-Relevated things like acceleration,           ???wassoll das heiﬂen?
 ;	velocity and Position
 ;-------------------------------------------------------------
 
@@ -42,7 +42,7 @@ Function Ph_DoTick(Obj.Ph_Object, Time#)
 	EndIf
 	
 	Local a#[1]
-	; Apply Acceleration to Velocity
+	; Apply Acceleration to Velocity        ???kleinschreiben
 	
 	MultiplyVector(Obj\Acc, Time, a)
 	
@@ -63,7 +63,7 @@ End Function
 
 ;----------------------------------------------------------
 ;PH_APPLYFORCE
-;Applys an Force at a point of an object - use this to
+;Applys a force at a point of an object - use this to            ???was soll das heiﬂen?
 ; apply Forces
 ;----------------------------------------------------------
 
@@ -96,7 +96,7 @@ End Function
 
 ;-------------------------------------------------------
 ;PH_APPLYVELFORCE
-;Applyes an Force, that directly cause an Acceleration
+;Applys a force, that directly causes an acceleration
 ;-------------------------------------------------------
 
 Function Ph_ApplyVelForce(Obj.Ph_Object, Force#[1])
@@ -107,7 +107,7 @@ End Function
 
 ;-------------------------------------------------------
 ; PH_APPLYROTTORQUE
-; Applys an Torque to an Object
+; Applys a torque to an object
 ;-------------------------------------------------------
 
 Function Ph_ApplyRotTorque(Obj.Ph_Object, Torque#)
@@ -116,7 +116,7 @@ End Function
 
 ;-------------------------------------------------------
 ; PH_RENDER
-; Draws the Object on the Screen
+; Draws the object on-screen
 ;-------------------------------------------------------
 
 Function Ph_Render(Obj.Ph_Object)   ; 1 m ^= 100px
@@ -133,7 +133,7 @@ End Function
 
 ;----------------------------------------------------------
 ; PH_GETVIRTUALCOPYAFTERTIME
-; Copyses an Object needed for Collision-Check
+; Copys an object needed for Collision-Checking
 ;----------------------------------------------------------
 
 Function Ph_GetVirtualCopyAfterTime.Ph_Object(obj.Ph_Object,t#)
@@ -158,7 +158,7 @@ End Function
 
 ;-----------------------------------------------------------
 ; PH_READFROMFILE
-; Reads Szene form a File
+; Reads Szene from a file
 ; -----------------------
 ;  File Structure:
 ;  /----------------\

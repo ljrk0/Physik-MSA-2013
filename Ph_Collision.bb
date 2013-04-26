@@ -1,6 +1,6 @@
 ;------------------------------------------------
 ;PH_DOCOLLISION
-; Checks for Collision calls the CollisonApplying
+; Checks for Collision calls the CollisonApplying  ???was soll das heiﬂen?
 ;------------------------------------------------
 
 Function Ph_DoCollision(t#, maxabs#, recnr=0)
@@ -70,7 +70,7 @@ End Function
 
 ;-------------------------------------------------------------
 ;PH_COLLIDEOBJECTAFTERTIME
-;Returns a Bank with the Collision-Information at t after now
+;Returns a Bank with the Collision-Information at t after now   ?Bank was soll das heiﬂen?
 ; if the Bank is 0 there is no collision
 ;-------------------------------------------------------------
 Function Ph_CollideObjectAfterTime(obj1.Ph_Object, obj2.Ph_Object, t#)
@@ -156,11 +156,11 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	MultiplyVector(obj1velB, Temp1, obj1velB)
 	MultiplyVector(obj2velB, Temp2, obj2velB)
 	
-	; Bewegung in Collisionsrichtung ausbremsen
+	; Bewegung in Kollisionsrichtung ausbremsen     ???warum jetzt auf DE?
 	
 	;- obj1
 	
-		; Reibung berechnen - fehler : nur fuer ein Festes objet diffiniert!
+		; Reibung berechnen - Fehler: nur fuer ein festes Objekt definiert!
 	
 	If Not obj1\Fixed Then
 		SubtractVector(obj1velUB, obj2velUB, temp)
@@ -179,7 +179,7 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	obj2\Vel[0] = obj2velUB[0]
 	obj2\Vel[1] = obj2velUB[1]
 		
-	; berechnung des Stosses
+	; Berechnung des Stosses
 	
 	If Not obj2\Fixed Then
 		MultiplyVector(obj1velB, obj1\Mass / t, temp)

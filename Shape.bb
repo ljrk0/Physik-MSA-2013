@@ -9,7 +9,7 @@ End Type
 
 ;-------------------------------------------
 ;SH_ADDPOINT
-; Adds an Point to an existing Shape
+; Adds a point to an existing shape
 ;-------------------------------------------
 Function Sh_AddPoint(Obj.Shape,X#,Y#)
 	Obj\Point[Obj\PointAnz]=New Point
@@ -21,7 +21,7 @@ End Function
 
 ;-------------------------------------------
 ;SH_CREATESQUARE
-;Crates an new Shape with an Sqyare
+;Crates a new shape with a square                       ???was soll das heiﬂen: vorschlag out of
 ;-------------------------------------------
 Function Sh_CreateSquare.Shape(X1#,Y1#,X2#,Y2#)
 	Local CBox.Shape = New Shape
@@ -34,7 +34,7 @@ End Function
 
 ;-------------------------------------------
 ;SH_CREATECYCLE
-;Creates an new Shapw with an Cycle
+;Creates a new Shape with a cycle                     ???was soll das heiﬂen: vorschlag out of
 ;-------------------------------------------
 Function Sh_CreateCycle.Shape(X#,Y#,r#)
 	Local CCyc.Shape = New Shape
@@ -47,7 +47,7 @@ End Function
 
 ;---------------------------------------------
 ;SH_GETSHAPEEGE
-; gets the Minimum and Maximum Points of the
+; gets the minimum and maximum Points of the              !!!maximum number of oder was soll das heiﬂen?
 ;Shape
 ;---------------------------------------------
 Function Sh_GetShapeEge(Obj.Shape, minPoint#[1], maxPoint#[1])

@@ -2,7 +2,7 @@ Include "Shape.bb"
 
 ;---------------------------------------------------
 ;PH_CALCULATEMOMENTOFINERTIA
-; Calculates the Moment Of Ineria from a Mass and
+; Calculates the moment of Inerita from a Mass and
 ; a Collision-Box/Shape
 ;---------------------------------------------------
 Function Ph_CalculateMomentOfInertia#(Obj.Shape, mass#)
@@ -17,8 +17,8 @@ End Function
 
 ;-----------------------------------------------------
 ;PH_GETABSOLUTCOLLISIONBOX
-; Transfers an CollisonBox to the gloal
-; Coordiat-System
+; Transfers an CollisonBox to the gloal           ???soll großgeschrieben (Transfers, weil eig. klein)
+; coordinate system
 ;-----------------------------------------------------
 Function Ph_GetAbsolutCollisionBox.Shape(obj.Ph_Object)
 	Local obj2.Shape = obj\CollisionBox ; nur zur vereinfachten Schreibweise
@@ -35,8 +35,8 @@ End Function
 
 ;-------------------------------------------------------
 ;PH_RELATIVEPOSITION
-; Transfers an Global Coordinate to the objects
-; Coordination-System
+; Transfers a global coordinate to the objects
+; coordinate system                                                    ???coordination-system-->einfach ZUUU geil--> koordinierendes-system
 ;-------------------------------------------------------
 
 Function Ph_RelativatePosition(obj.Ph_Object, P1#[1], P2#[1])
@@ -46,8 +46,8 @@ End Function
 
 ;------------------------------------------------------
 ;PH_COLLISIONBOXCOLLIDING
-; Checks, if tow (absolute) Collisionboxes are
-; collidiong Or Not
+; Checks, wether two (absolute) collisionboxes are
+; collidiong or not
 ;------------------------------------------------------
 
 Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
@@ -116,7 +116,7 @@ End Function
 
 ;----------------------------------------------
 ;PH_DRAWIMAGEFROMCOLLISIONBOX
-; Draws an Collision-Box on the screen
+; Draws an collision-Box on-screen
 ;----------------------------------------------
 Function Ph_DrawImagefromCollisonBox(Obj.Shape)
 	Local i

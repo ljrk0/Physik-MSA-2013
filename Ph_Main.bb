@@ -4,7 +4,7 @@ Include "Ph_Collision.bb"
 
 ;-----------------------------------------------------
 ; MAINPHYSICTICK
-; Calls the DoTick Funciton for each Object
+; Calls the DoTick-Funciton for each Object
 ;-----------------------------------------------------
 
 Function MainPhysicTick(t#)
