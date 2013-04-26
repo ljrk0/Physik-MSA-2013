@@ -95,20 +95,7 @@ Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
 		PokeFloat Bank, 8, VectorAngle(temp,temp2)
 		
 		Return Bank
-;	Else If count=1
-;		Bank = CreateBank(12)
 		
-;		PokeFloat Bank, 0, Pos0[0]
-;		PokeFloat Bank, 4, Pos0[1]
-		
-;		temp2[0]=1
-;		temp2[1]=0
-		
-;		SubtractVector(Pos1,Pos0,temp)
-;		If VectorLength(temp)=0 Then Return 0
-;		PokeFloat Bank, 8, VectorAngle(temp,temp2)
-		
-;		Return Bank
 	Else
 		Return 0
 	EndIf
@@ -127,7 +114,6 @@ Function Ph_DrawImagefromCollisonBox(Obj.Shape)
 	Line Obj\Point[Obj\PointCount-1]\Pos[0]*100,Obj\Point[Obj\PointCount-1]\Pos[1]*100,Obj\Point[i]\Pos[0]*100,Obj\Point[i]\Pos[1]*100
 	For i = 1 To Obj\PointCount-1
 		Line Obj\Point[i-1]\Pos[0]*100,Obj\Point[i-1]\Pos[1]*100,Obj\Point[i]\Pos[0]*100,Obj\Point[i]\Pos[1]*100
-		;DebugLog Obj\Point[i-1]\Pos[0]*100
 	Next
 	SetBuffer BackBuffer()
 	Color r,g,b

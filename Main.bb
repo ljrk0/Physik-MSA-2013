@@ -28,8 +28,6 @@ Repeat
 	
 	Ph_ApplyForce(Obj, force2, pos2, False)
 	
-;	DebugLog Obj\Vel[0] + ", " + Obj\Vel[1]
-	
 	MainPhysicTick(tick)
 	LastTime=MilliSecs()
 	Cls

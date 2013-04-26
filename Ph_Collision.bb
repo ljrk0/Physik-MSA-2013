@@ -45,11 +45,6 @@ Function Ph_DoCollision(t#, maxabs#, recnr=0)
 				CollisonPointTemp[0] = Temp[0]
 				CollisonPointTemp[1] = Temp[1]
 				
-				;Ph_DoTick(obj, t*lt-0.0001)
-				;Ph_DoTick(obj2, t*lt-0.0001)
-				;obj\maxTick = t*lt
-				;obj2\maxTick = t*lt
-				
 				Ph_RelativatePosition(obj,Temp,Temp1)
 				Ph_RelativatePosition(obj2,Temp,Temp2)
 				
@@ -191,7 +186,6 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	EndIf
 	
 	DebugLog obj2velUB[0] + ", " + obj2velUB[0]
-	;Print angle : WaitKey()
 End Function
 ;~IDEal Editor Parameters:
 ;~C#Blitz3D
