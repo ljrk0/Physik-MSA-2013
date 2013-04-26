@@ -1,6 +1,6 @@
 ;------------------------------------------------
 ;PH_DOCOLLISION
-; Checks for Collision calls the CollisonApplying  ???was soll das heißen? -> kannste kein englisch oder wie? Uerberprueft auf Kollison und ruft die Funktion "CollisionApplying" auf
+; Checks for Collision; calls CollisonApplying  ???JUST FAILING XD
 ;------------------------------------------------
 
 Function Ph_DoCollision(t#, maxabs#, recnr=0)
@@ -70,7 +70,7 @@ End Function
 
 ;-------------------------------------------------------------
 ;PH_COLLIDEOBJECTAFTERTIME
-;Returns a Bank with the Collision-Information at t after now   ?Bank was soll das heißen? -> Eine (Speicher)Bank welche in Blitz Basic existirt - Du kannst da beliebig viele Daten reinschreiben
+;Returns a bank with the information about the collision at t after now 
 ; if the Bank is 0 there is no collision
 ;-------------------------------------------------------------
 Function Ph_CollideObjectAfterTime(obj1.Ph_Object, obj2.Ph_Object, t#)
@@ -91,7 +91,7 @@ End Function
 
 ;------------------------------------------------------------------
 ;PH_APPLYCOLLISION
-; Applys an Collision using Forces
+; Applys a collision using forces
 ;------------------------------------------------------------------
 
 Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2#[1], angle#, t#)
