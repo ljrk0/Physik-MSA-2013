@@ -14,7 +14,7 @@ Type Ph_Object
 	Field CollisionBox.Shape
 	Field Virtual   ; true/false
 	Field Fixed		; true/false
-	Field friction_velue# ; scalar                                                        !!!value
+	Field friction_value# ; scalar        
 	Field FixedPos#[1], FixedRot#
 	Field maxTick# ;true/false
 End Type
