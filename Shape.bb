@@ -1,5 +1,5 @@
 Type Shape
-	Field PointAnz
+	Field PointCount
 	Field Point.Point[100]
 End Type
 
@@ -12,10 +12,10 @@ End Type
 ; Adds a point to an existing shape
 ;-------------------------------------------
 Function Sh_AddPoint(Obj.Shape,X#,Y#)
-	Obj\Point[Obj\PointAnz]=New Point
-	Obj\Point[Obj\PointAnz]\Pos[0]=X
-	Obj\Point[Obj\PointAnz]\Pos[1]=Y
-	Obj\PointAnz=Obj\PointAnz+1
+	Obj\Point[Obj\PointCount]=New Point
+	Obj\Point[Obj\PointCount]\Pos[0]=X
+	Obj\Point[Obj\PointCount]\Pos[1]=Y
+	Obj\PointCount=Obj\PointCount+1
 	
 End Function
 
@@ -58,7 +58,7 @@ Function Sh_GetShapeEge(Obj.Shape, minPoint#[1], maxPoint#[1])
 	maxPoint[0]=-10000
 	maxPoint[1]=-10000
 	
-	For i = 0 To Obj\PointAnz-1
+	For i = 0 To Obj\PointCount-1
 		If Obj\Point[i]\Pos[0] < minPoint[0] Then minPoint[0] = Obj\Point[i]\Pos[0]
 		If Obj\Point[i]\Pos[0] > maxPoint[0] Then maxPoint[0] = Obj\Point[i]\Pos[0]
 		If Obj\Point[i]\Pos[1] < minPoint[1] Then minPoint[1] = Obj\Point[i]\Pos[1]

@@ -72,8 +72,8 @@ Function Ph_ApplyForce(Obj.Ph_Object, Force#[1], approach#[1], Relative = True)
 		RotateVector(approach,Obj\Rot,approach)
 	EndIf
 	
-	If VectorLenght(Force)=0 Then Return
-	If VectorLenght(approach)=0 Then
+	If VectorLength(Force)=0 Then Return
+	If VectorLength(approach)=0 Then
 		Ph_ApplyVelForce(Obj,Force)
 	Else
 		
@@ -82,11 +82,11 @@ Function Ph_ApplyForce(Obj.Ph_Object, Force#[1], approach#[1], Relative = True)
 		Local a#[1]
 		MultiplyVector(approach,-1,a)
 		Local Angle# = RadToDeg(VectorAngle(a,Force))
-		Ph_ApplyRotTorque(Obj,Sin(Angle)*VectorLenght(Force)*VectorLenght(approach))
+		Ph_ApplyRotTorque(Obj,Sin(Angle)*VectorLength(Force)*VectorLength(approach))
 		Local b#[1]
 		NormalizeVector(a,b)
 		
-		MultiplyVector(b, Sin(90-Angle)*VectorLenght(Force),b)
+		MultiplyVector(b, Sin(90-Angle)*VectorLength(Force),b)
 		
 		Ph_ApplyVelForce(Obj,b)
 	EndIf
@@ -208,7 +208,7 @@ Function Ph_ReadFromFile(Filename$)
 		Obj\RotVel = ReadLine(File)
 		Obj\Mass = ReadLine(File)
 		Obj\RotMass = Ph_CalculateMomentOfInertia(Obj\CollisionBox,Obj\Mass)
-		Obj\friction_velue = ReadLine(File)
+		Obj\friction_value = ReadLine(File)
 		Obj\Fixed = ReadLine(File)
 		If Obj\Fixed Then
 			Obj\FixedPos[0]=Obj\Pos[0]

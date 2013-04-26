@@ -1,6 +1,6 @@
 ;------------------------------------------------
 ;PH_DOCOLLISION
-; Checks for Collision; calls CollisonApplying                                                     ???JUST FAILING XD
+; Checks for Collision; calls CollisonApplying                                                  
 ;------------------------------------------------
 
 Function Ph_DoCollision(t#, maxabs#, recnr=0)
@@ -32,7 +32,7 @@ Function Ph_DoCollision(t#, maxabs#, recnr=0)
 					Else
 						t2=t2-(1/(2^i))
 					EndIf
-				Until (t2*t)*VectorLenght(obj\Vel)<maxabs And (t2*t)*VectorLenght(obj2\Vel)<maxabs
+				Until (t2*t)*VectorLength(obj\Vel)<maxabs And (t2*t)*VectorLength(obj2\Vel)<maxabs
 				
 				If Ph_CollideObjectAfterTime(obj, obj2, t*t2) Then
 					lt=t2
@@ -114,7 +114,7 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	Local obj2velUB#[1]
 	Local Temp1#, Temp2#
 	
-	; Berechnug der unbeeinflussten Teile (vel1)
+	;Calculation fo the unaffected parts of velocity (vel1)
 	
 	obj1velUB[0]=1
 	obj1velUB[1]=0	
@@ -129,16 +129,16 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	temp[1]=0	
 	
 	
-	If VectorLenght(PVel1) = 0 Then Temp1 = 0 Else Temp1=Sin(90-RadToDeg(VectorAngle(PVel1,temp)-angle))*VectorLenght(PVel1)
-	If VectorLenght(PVel2) = 0 Then Temp2 = 0 Else Temp2=Sin(90-RadToDeg(VectorAngle(PVel2,temp)-angle))*VectorLenght(PVel2)
+	If VectorLength(PVel1) = 0 Then Temp1 = 0 Else Temp1=Sin(90-RadToDeg(VectorAngle(PVel1,temp)-angle))*VectorLength(PVel1)
+	If VectorLength(PVel2) = 0 Then Temp2 = 0 Else Temp2=Sin(90-RadToDeg(VectorAngle(PVel2,temp)-angle))*VectorLength(PVel2)
 	
 	
 	MultiplyVector(obj1velUB, Temp1, obj1velUB)
 	MultiplyVector(obj2velUB, Temp2, obj2velUB)
 	
-	;If VectorLenght(obj2velUB) <> 0 Then Stop
+	;If VectorLength(obj2velUB) <> 0 Then Stop
 	
-	; Berechung der beeinflussten Teile der Geschwindigkeit (vel2)
+	;Calculation fo the influenced parts of velocity (vel2)
 	
 	obj1velB[0]=1
 	obj1velB[1]=0	
@@ -149,27 +149,27 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	RotateVector(obj1velB,angle+(Pi/2),obj1velB)
 	
 	
-	If VectorLenght(PVel1) = 0 Then Temp1 = 0 Else Temp1=Sin(RadToDeg(VectorAngle(PVel1,temp)-angle))*VectorLenght(PVel1)
-	If VectorLenght(PVel2) = 0 Then Temp2 = 0 Else Temp2=Sin(RadToDeg(VectorAngle(PVel2,temp)-angle))*VectorLenght(PVel2)
+	If VectorLength(PVel1) = 0 Then Temp1 = 0 Else Temp1=Sin(RadToDeg(VectorAngle(PVel1,temp)-angle))*VectorLength(PVel1)
+	If VectorLength(PVel2) = 0 Then Temp2 = 0 Else Temp2=Sin(RadToDeg(VectorAngle(PVel2,temp)-angle))*VectorLength(PVel2)
 	
 	
 	MultiplyVector(obj1velB, Temp1, obj1velB)
 	MultiplyVector(obj2velB, Temp2, obj2velB)
 	
-	; Bewegung in Kollisionsrichtung ausbremsen     ???warum jetzt auf DE?
+	;Slow down of the movement in direction of the collsion  
 	
 	;- obj1
 	
-		; Reibung berechnen - Fehler: nur fuer ein festes Objekt definiert!
+		;Calculating friction - Error: Only defined for fixed objects
 	
 	If Not obj1\Fixed Then
 		SubtractVector(obj1velUB, obj2velUB, temp)
-		MultiplyVector(temp, obj1\Mass * (obj1\friction_velue + obj2\friction_velue) / 2 * -1 / t, temp)
+		MultiplyVector(temp, obj1\Mass * (obj1\friction_value + obj2\friction_value) / 2 * -1 / t, temp)
 		Ph_ApplyForce(obj1,temp,pos_obj1, False)
 	EndIf
 	If Not obj2\Fixed Then
 		SubtractVector(obj2velUB, obj1velUB, temp)
-		MultiplyVector(temp, obj2\Mass * (obj1\friction_velue + obj2\friction_velue) / 2 * -1 / t, temp)
+		MultiplyVector(temp, obj2\Mass * (obj1\friction_value + obj2\friction_value) / 2 * -1 / t, temp)
 		Ph_ApplyForce(obj2,temp,pos_obj2, False)
 ;		DebugLog pos_obj1[0] + ", " + pos_obj1[1]
 	EndIf
@@ -179,7 +179,7 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	obj2\Vel[0] = obj2velUB[0]
 	obj2\Vel[1] = obj2velUB[1]
 		
-	; Berechnung des Stosses
+	;Calculating collision/Stoss
 	
 	If Not obj2\Fixed Then
 		MultiplyVector(obj1velB, obj1\Mass / t, temp)

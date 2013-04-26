@@ -3,9 +3,9 @@
 ;DIVIDEVECTOR
 ;MULTIPLYVECTOR
 ;NORMALIZEVECTOR
-;VECTORSCALARPRODUCT ???
+;VECTORSCALARPRODUCT
 ;VECTORCROSSPRODUCT
-;VECTORLENGHT
+;VECTORLength
 ;VECTORANGLE
 ;ROTATEVECTOR
 ; Basic Vector Functions
@@ -34,8 +34,8 @@ Function MultiplyVector(V1#[1],Z#,V2#[1])
 End Function
 
 Function NormalizeVector(V1#[1],V2#[1])
-	V2[0]=V1[0]/VectorLenght(V1)
-	V2[1]=V1[1]/VectorLenght(V1)
+	V2[0]=V1[0]/VectorLength(V1)                                       
+	V2[1]=V1[1]/VectorLength(V1)
 End Function
 
 Function VectorScalarProduct#(V1#[1], V2#[1])
@@ -46,16 +46,16 @@ Function VectorCrossProduct#(V1#[1], V2#[1])
 	Return (V1[0]*V2[1])-(V1[1]*V2[0])
 End Function
 
-Function VectorLenght#(V1#[1])
+Function VectorLength#(V1#[1])
 	Return Sqr((V1[0]^2)+(V1[1]^2)) 
 End Function
 
 
 Function VectorAngle#(V1#[1], V2#[1])
 	If VectorCrossProduct(V1,V2) > 0 Then
-		Return DegToRad(-ACos(VectorScalarProduct(V1,V2)/(VectorLenght(V1)*VectorLenght(V2))))
+		Return DegToRad(-ACos(VectorScalarProduct(V1,V2)/(VectorLength(V1)*VectorLength(V2))))
 	Else
-		Return DegToRad(ACos(VectorScalarProduct(V1,V2)/(VectorLenght(V1)*VectorLenght(V2))))
+		Return DegToRad(ACos(VectorScalarProduct(V1,V2)/(VectorLength(V1)*VectorLength(V2))))
 	EndIf	
 End Function
 
@@ -72,8 +72,7 @@ End Function
 ;--------------------------------------------
 ;RADTODEG
 ;DEGTORAD
-; converts degree to radiant and
-; inverse
+; Converts degree to radiant and inverse
 ;---------------------------------------------
 
 Function RadToDeg#(rad#)
@@ -86,7 +85,7 @@ End Function
 
 ;-------------------------------------------------
 ; LINELINE
-; Checks wether the two Lines are colliding
+; Checks wether the two lines are colliding
 ;------------------------------------------------
 
 Function LineLine(p0#[1], p1#[1], p2#[1], p3#[1], result#[1])

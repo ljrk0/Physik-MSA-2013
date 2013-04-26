@@ -8,9 +8,9 @@ Include "Shape.bb"
 Function Ph_CalculateMomentOfInertia#(Obj.Shape, mass#)
 	Local Sum1#, Sum2#
 	Local i
-	For i=0 To Obj\PointAnz-1
-		Sum1=Sum1+Abs(VectorCrossProduct(Obj\Point[(i+1) Mod Obj\PointAnz]\Pos,Obj\Point[i]\Pos))*(VectorScalarProduct(Obj\Point[(i+1) Mod Obj\PointAnz]\Pos,Obj\Point[(i+1) Mod Obj\PointAnz]\Pos) + VectorScalarProduct(Obj\Point[(i+1) Mod Obj\PointAnz]\Pos,Obj\Point[i]\Pos) + VectorScalarProduct(Obj\Point[i]\Pos,Obj\Point[i]\Pos))
-		Sum2=Sum2+Abs(VectorCrossProduct(Obj\Point[(i+1) Mod Obj\PointAnz]\Pos,Obj\Point[i]\Pos))
+	For i=0 To Obj\PointCount-1
+		Sum1=Sum1+Abs(VectorCrossProduct(Obj\Point[(i+1) Mod Obj\PointCount]\Pos,Obj\Point[i]\Pos))*(VectorScalarProduct(Obj\Point[(i+1) Mod Obj\PointCount]\Pos,Obj\Point[(i+1) Mod Obj\PointCount]\Pos) + VectorScalarProduct(Obj\Point[(i+1) Mod Obj\PointCount]\Pos,Obj\Point[i]\Pos) + VectorScalarProduct(Obj\Point[i]\Pos,Obj\Point[i]\Pos))
+		Sum2=Sum2+Abs(VectorCrossProduct(Obj\Point[(i+1) Mod Obj\PointCount]\Pos,Obj\Point[i]\Pos))
 	Next
 	Return ((mass/6)*(Sum1/Sum2))
 End Function
@@ -23,9 +23,9 @@ End Function
 Function Ph_GetAbsolutCollisionBox.Shape(obj.Ph_Object)
 	Local obj2.Shape = obj\CollisionBox ; nur zur vereinfachten Schreibweise
 	Local result.Shape = New Shape
-	result\PointAnz = obj2\PointAnz
+	result\PointCount = obj2\PointCount
 	Local i
-	For i = 0 To obj2\PointAnz-1
+	For i = 0 To obj2\PointCount-1
 		result\Point[i] = New Point
 		RotateVector(obj2\Point[i]\Pos, obj\Rot, result\Point[i]\Pos)
 		AddVector(result\Point[i]\Pos,obj\Pos,result\Point[i]\Pos)
@@ -58,9 +58,9 @@ Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
 	Local Pos0#[1]
 	Local Pos1#[1]
 	Cls
-	For i=1 To obj1\PointAnz
-		For j=1 To obj2\PointAnz
-			If LineLine(obj1\Point[i Mod obj1\PointAnz]\Pos, obj1\Point[i-1]\Pos, obj2\Point[j Mod obj2\PointAnz]\Pos, obj2\Point[j-1]\Pos, temp) Then
+	For i=1 To obj1\PointCount
+		For j=1 To obj2\PointCount
+			If LineLine(obj1\Point[i Mod obj1\PointCount]\Pos, obj1\Point[i-1]\Pos, obj2\Point[j Mod obj2\PointCount]\Pos, obj2\Point[j-1]\Pos, temp) Then
 				If count=0 Then
 					Pos0[0] = temp[0]
 					Pos0[1] = temp[1]
@@ -91,7 +91,7 @@ Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
 		
 		
 		SubtractVector(Pos1,Pos0,temp)
-		If VectorLenght(temp)=0 Then Return 0
+		If VectorLength(temp)=0 Then Return 0
 		PokeFloat Bank, 8, VectorAngle(temp,temp2)
 		
 		Return Bank
@@ -105,7 +105,7 @@ Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
 ;		temp2[1]=0
 		
 ;		SubtractVector(Pos1,Pos0,temp)
-;		If VectorLenght(temp)=0 Then Return 0
+;		If VectorLength(temp)=0 Then Return 0
 ;		PokeFloat Bank, 8, VectorAngle(temp,temp2)
 		
 ;		Return Bank
@@ -124,8 +124,8 @@ Function Ph_DrawImagefromCollisonBox(Obj.Shape)
 	Local g=ColorGreen()
 	Local b=ColorBlue()
 	Color 255,0,0
-	Line Obj\Point[Obj\PointAnz-1]\Pos[0]*100,Obj\Point[Obj\PointAnz-1]\Pos[1]*100,Obj\Point[i]\Pos[0]*100,Obj\Point[i]\Pos[1]*100
-	For i = 1 To Obj\PointAnz-1
+	Line Obj\Point[Obj\PointCount-1]\Pos[0]*100,Obj\Point[Obj\PointCount-1]\Pos[1]*100,Obj\Point[i]\Pos[0]*100,Obj\Point[i]\Pos[1]*100
+	For i = 1 To Obj\PointCount-1
 		Line Obj\Point[i-1]\Pos[0]*100,Obj\Point[i-1]\Pos[1]*100,Obj\Point[i]\Pos[0]*100,Obj\Point[i]\Pos[1]*100
 		;DebugLog Obj\Point[i-1]\Pos[0]*100
 	Next
