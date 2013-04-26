@@ -17,7 +17,7 @@ End Function
 
 ;-----------------------------------------------------
 ;PH_GETABSOLUTCOLLISIONBOX
-; Transfers an CollisonBox to the gloal           ???soll großgeschrieben (Transfers, weil eig. klein) -> dat is informatik
+; Transfers an CollisonBox to the gloal          
 ; coordinate system
 ;-----------------------------------------------------
 Function Ph_GetAbsolutCollisionBox.Shape(obj.Ph_Object)

@@ -1,6 +1,6 @@
 ;------------------------------------------------
 ;PH_DOCOLLISION
-; Checks for Collision; calls CollisonApplying  ???JUST FAILING XD
+; Checks for Collision; calls CollisonApplying                                                     ???JUST FAILING XD
 ;------------------------------------------------
 
 Function Ph_DoCollision(t#, maxabs#, recnr=0)

@@ -14,15 +14,14 @@ Type Ph_Object
 	Field CollisionBox.Shape
 	Field Virtual   ; true/false
 	Field Fixed		; true/false
-	Field friction_velue# ; scalar            !!!value
+	Field friction_velue# ; scalar                                                        !!!value
 	Field FixedPos#[1], FixedRot#
 	Field maxTick# ;true/false
 End Type
 
 ;------------------------------------------------------------
 ; PH_DOTICK
-; Calculates basic tick-related things eg. acceleration,           ???wassoll das heißen? -> Berechnet alle dinge, die jeden Tick passieren wie z.B. neue Geschwindigkeit mittels der Beschleuigung etc. 
-;	velocity and Position
+; Calculates basic tick-related things eg. acceleration,         
 ;-------------------------------------------------------------
 
 
