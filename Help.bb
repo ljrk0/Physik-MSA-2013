@@ -3,7 +3,7 @@
 ;DIVIDEVECTOR
 ;MULTIPLYVECTOR
 ;NORMALIZEVECTOR
-;VECTORSCALARPRODUCT
+;VECTORSCALARPRODUCT ???
 ;VECTORCROSSPRODUCT
 ;VECTORLENGHT
 ;VECTORANGLE
@@ -72,8 +72,8 @@ End Function
 ;--------------------------------------------
 ;RADTODEG
 ;DEGTORAD
-; converts angle vrom degree to radiant and
-; radiant to degree
+; converts degree to radiant and
+; inverse
 ;---------------------------------------------
 
 Function RadToDeg#(rad#)
@@ -86,7 +86,7 @@ End Function
 
 ;-------------------------------------------------
 ; LINELINE
-; Are the tow Lines colliding
+; Checks wether the two Lines are colliding
 ;------------------------------------------------
 
 Function LineLine(p0#[1], p1#[1], p2#[1], p3#[1], result#[1])
@@ -113,7 +113,7 @@ Function LineLine(p0#[1], p1#[1], p2#[1], p3#[1], result#[1])
 			End If
 		End If
 		
-		; Lines didn't cross, because the intersection was beyond the end points of the lines
+		; Lines didn't cross, because the intersection was beyond the endpoints of the lines              ??Zeit???
 	EndIf
 	
 	; Lines do not cross!
