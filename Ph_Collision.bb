@@ -3,7 +3,7 @@
 ; Checks for Collision; calls CollisonApplying                                                  
 ;------------------------------------------------
 
-Function Ph_DoCollision(t#, maxabs#, recnr=0)
+Function Ph_DoCollision(t#)
 	Local obj.Ph_Object
 	Local obj2.Ph_Object
 	Local virtual.Ph_Object
@@ -14,7 +14,6 @@ Function Ph_DoCollision(t#, maxabs#, recnr=0)
 	obj = First Ph_Object
 	If obj=Null Then Return
 	If obj\CollisionBox=Null Then Return
-	Local flag=False
 	Repeat
 		obj2 = After obj
 		If obj2=Null Then Exit
@@ -30,14 +29,10 @@ Function Ph_DoCollision(t#, maxabs#, recnr=0)
 						lt=t2
 						t2=t2-(1/(2^i))
 					Else
-						t2=t2-(1/(2^i))
+						t2=t2+(1/(2^i))
 					EndIf
-				Until (t2*t)*VectorLength(obj\Vel)<maxabs And (t2*t)*VectorLength(obj2\Vel)<maxabs
+				Until i=50
 				
-				If Ph_CollideObjectAfterTime(obj, obj2, t*t2) Then
-					lt=t2
-					t2=t2-(1/(2^i))
-				EndIf
 				tBank = Ph_CollideObjectAfterTime(obj, obj2, t*lt)
 				Temp[0] = PeekFloat(tBank,0)
 				Temp[1] = PeekFloat(tBank,4)
@@ -46,7 +41,6 @@ Function Ph_DoCollision(t#, maxabs#, recnr=0)
 				Ph_RelativatePosition(obj2,Temp,Temp2)
 				
 				Ph_ApplyCollision(obj,obj2, Temp1, Temp2, PeekFloat(tBank,8), t)
-				flag=True
 			EndIf
 			If obj2 = Last Ph_Object Then
 				Exit
@@ -57,7 +51,6 @@ Function Ph_DoCollision(t#, maxabs#, recnr=0)
 		obj = After obj
 		If obj = Last Ph_Object Then Exit
 	Forever
-	If flag And recnr<100 Then Ph_DoCollision(t, maxabs, recnr+1)
 End Function
 
 ;-------------------------------------------------------------
@@ -152,8 +145,6 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	
 	;- obj1
 	
-		;Calculating friction - Error: Only defined for fixed objects
-	
 	If Not obj1\Fixed Then
 		SubtractVector(obj1velUB, obj2velUB, temp)
 		MultiplyVector(temp, obj1\Mass * (obj1\friction_value + obj2\friction_value) / 2 * -1 / t, temp)
@@ -163,7 +154,6 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 		SubtractVector(obj2velUB, obj1velUB, temp)
 		MultiplyVector(temp, obj2\Mass * (obj1\friction_value + obj2\friction_value) / 2 * -1 / t, temp)
 		Ph_ApplyForce(obj2,temp,pos_obj2, False)
-;		DebugLog pos_obj1[0] + ", " + pos_obj1[1]
 	EndIf
 	
 	obj1\Vel[0] = obj1velUB[0]

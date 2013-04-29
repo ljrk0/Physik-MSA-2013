@@ -16,7 +16,6 @@ Type Ph_Object
 	Field Fixed		; true/false
 	Field friction_value# ; scalar        
 	Field FixedPos#[1], FixedRot#
-	Field maxTick# ;true/false
 End Type
 
 Type Ph_Force
@@ -32,8 +31,6 @@ End Type
 
 
 Function Ph_DoTick(Obj.Ph_Object, Time#)
-	If Obj\maxTick < Time And Obj\maxTick > 0 Then Time = Obj\maxTick
-	Obj\maxTick=0
 	
 	If Obj\Fixed Then
 		Obj\Vel[0] = 0

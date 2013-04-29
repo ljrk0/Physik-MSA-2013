@@ -10,7 +10,7 @@ Include "Ph_Collision.bb"
 Function MainPhysicTick(t#)
 	Local obj.Ph_Object
 	Local obj2.Ph_Force
-	Ph_DoCollision(t,0.000000001)
+	Ph_DoCollision(t)
 	For obj = Each Ph_Object
 		Ph_DoTick(obj, t)
 	Next
