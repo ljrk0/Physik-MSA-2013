@@ -1,3 +1,11 @@
+;------------------------------------------
+; Shows all Files in the Setups folder with
+; the ending .phS" and opens the Setup when
+; clicked on one File
+;------------------------------------------
+
+
+
 Local Files$[100]
 Local Dir = ReadDir("Setups")
 Local File$
