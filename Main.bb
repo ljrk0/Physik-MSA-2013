@@ -1,36 +1,23 @@
 Graphics 800,600,0,6
 SetBuffer BackBuffer()
-AppTitle "MSA 2013 - Physiksimulationen in der Informatik - Copyright © 2013 by Jochen Jacobs & Leonard Robert Koenig"
+AppTitle "MSA 2013 - Physiksimulationen in der Informatik - Jochen Jacobs und Leonard König"
 
 Include "Ph_Main.bb"
 
 Const FPS#=30
 Const tick#=1/FPS#
 
-Ph_ReadFromFile("BallOnSquare.phS")
+Include "Open.bb"
 
-Local pos1#[1]
-Local force2#[1]
-Local pos2#[1]
-
-Local LastTime# = MilliSecs()
 Local Timer = CreateTimer(FPS)
-Local TimerError
 
 Repeat
 	WaitTimer(Timer)
 	
-	Local Obj.Ph_Object = After ( First Ph_Object )
-	force2[0] = 0
-	force2[1] = 5
-	
-	;Ph_ApplyForce(Obj, force2, pos2, False)
-	
 	MainPhysicTick(tick)
-	LastTime=MilliSecs()
+	
 	Cls
 	MainPhysicRender()
-	
 	Flip
 Until KeyHit(1)
 
