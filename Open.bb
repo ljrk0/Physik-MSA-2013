@@ -1,7 +1,6 @@
 ;------------------------------------------
-; Shows all Files in the Setups folder with
-; the ending .phS" and opens the Setup when
-; clicked on one File
+; Shows all files in the "Setups" folder with
+; the ending .phS" and opens the choosen one.
 ;------------------------------------------
 
 
