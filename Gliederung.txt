@@ -1,4 +1,4 @@
-Einleitung -> 	Heutige wichtigkeit von Physik-Engines
+Einleitung -> 	Heutige Wichtigkeit von Physik-Engines
 		beschraenkung auf Mechanik
 		Stichwort: Echtzeitsimulation
 		1. Demonstration der Physic-Engine
@@ -6,7 +6,7 @@ Einleitung -> 	Heutige wichtigkeit von Physik-Engines
 kurze Einfuehrung in Blitz-Basic - Begruendung der Wahl
 	-> Inklusive IDEal
 
-Hinweis: Auskommentireten Code nicht beachten -> Spetere Implementation
+Hinweis: Auskommentierten Code nicht beachten -> Spätere Implementation
 
 Grundgeruest der Engine - Geschwindigkeit, Beschleunigung und Ort     |Physikalischer Hintergurnd
 			- Rotation, -geschwindigkeit, -Beschleuigung
@@ -35,12 +35,12 @@ Impementirung von Reibung - Physikalischer Hintergrund
 
 Was Fehlt: -Luftwiederstand
 	   -Kraftfelder
-	   -Federn (aber einfach zu rekonstruieren mittels Kraefte
+	   -Federn (aber einfach zu rekonstruieren mittels Kraeften)
 	     ->Wellen
 
-Verkettnteration - Eine andere moeglichkeit der Physikberechnug - Vor- und Nachteile
+Verlet-Integration - Eine andere moeglichkeit der Physikberechnug - Vor- und Nachteile
 
 Fazit: muss nicht auf Physikalischen Gesetzen basieren
-       Echtzeitsimulation
+       für Echtzeitsimulation geeignet
 
 Quellen und Infos (Pixel im Freien Fall)

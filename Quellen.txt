@@ -18,11 +18,7 @@ Maturarbeit - Pixel im freien Fall - Programmierung einer Physiksimulation mithi
 
 Physicunterricht 9. / 10. Klasse von herr dr. Ebert
 
-http://de.wikipedia.org/wiki/Sto%C3%9F_(Physik) (zuletzt aufgerufen 23.4.2013 15:20 Uhr)
-
-http://en.wikipedia.org/wiki/Collision (zuletzt aufgerufen 23.4.2013 15:21 Uhr)
-
-Metzler Physik - 3. Auflage (2004) - herausgegeben von Joachim Grehn und Joachim Krause ; Schroedel Verlag GmbH, Hanofer
+1. Kapitel (S.XY-YZ) Metzler Physik - 3. Auflage (2004) - herausgegeben von Joachim Grehn und Joachim Krause ; Schroedel Verlag GmbH, Hanofer
 
 http://de.wikipedia.org/wiki/Drehmoment (zuletzt aufgerufen 23.4.2013 15:25 Uhr)
 
