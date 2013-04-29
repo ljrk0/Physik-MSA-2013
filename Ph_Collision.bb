@@ -42,9 +42,6 @@ Function Ph_DoCollision(t#, maxabs#, recnr=0)
 				Temp[0] = PeekFloat(tBank,0)
 				Temp[1] = PeekFloat(tBank,4)
 				
-				CollisonPointTemp[0] = Temp[0]
-				CollisonPointTemp[1] = Temp[1]
-				
 				Ph_RelativatePosition(obj,Temp,Temp1)
 				Ph_RelativatePosition(obj2,Temp,Temp2)
 				

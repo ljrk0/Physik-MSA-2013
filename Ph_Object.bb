@@ -19,6 +19,12 @@ Type Ph_Object
 	Field maxTick# ;true/false
 End Type
 
+Type Ph_Force
+	Field Obj.Ph_Object
+	Field Force#[1], approach#[1], Relative
+	Field time
+End Type
+
 ;------------------------------------------------------------
 ; PH_DOTICK
 ; Calculates basic tick-related things eg. acceleration,         
@@ -67,26 +73,33 @@ End Function
 ;----------------------------------------------------------
 
 Function Ph_ApplyForce(Obj.Ph_Object, Force#[1], approach#[1], Relative = True)
+	Local Force2#[1]
+	Local approach2#[1]
 	If Relative Then
-		RotateVector(Force,Obj\Rot,Force)
-		RotateVector(approach,Obj\Rot,approach)
+		RotateVector(Force,Obj\Rot,Force2)
+		RotateVector(approach,Obj\Rot,approach2)
+	Else
+		Force2[0]=Force[0]
+		Force2[1]=Force[1]
+		approach2[0]=approach[0]
+		approach2[1]=approach[1]
 	EndIf
 	
-	If VectorLength(Force)=0 Then Return
-	If VectorLength(approach)=0 Then
-		Ph_ApplyVelForce(Obj,Force)
+	If VectorLength(Force2)=0 Then Return
+	If VectorLength(approach2)=0 Then
+		Ph_ApplyVelForce(Obj,Force2)
 	Else
 		
 		
 			
 		Local a#[1]
-		MultiplyVector(approach,-1,a)
-		Local Angle# = RadToDeg(VectorAngle(a,Force))
-		Ph_ApplyRotTorque(Obj,Sin(Angle)*VectorLength(Force)*VectorLength(approach))
+		MultiplyVector(approach2,-1,a)
+		Local Angle# = RadToDeg(VectorAngle(a,Force2))
+		Ph_ApplyRotTorque(Obj,Sin(Angle)*VectorLength(Force2)*VectorLength(approach2))
 		Local b#[1]
 		NormalizeVector(a,b)
 		
-		MultiplyVector(b, Sin(90-Angle)*VectorLength(Force),b)
+		MultiplyVector(b, Sin(90-Angle)*VectorLength(Force2),b)
 		
 		Ph_ApplyVelForce(Obj,b)
 	EndIf
@@ -154,70 +167,5 @@ Function Ph_GetVirtualCopyAfterTime.Ph_Object(obj.Ph_Object,t#)
 	Ph_DoTick(result, t)
 	Return result
 End Function
-
-;-----------------------------------------------------------
-; PH_READFROMFILE
-; Reads scene from a file
-; -----------------------
-;  File Structure:
-;  /----------------\
-;  |[Beliebig]		|
-;  |square/cycle	|
-;  |if square: XSize|
-;  |		   YSize|
-;  |if cycle: radius|
-;  |XPos			|
-;  |YPos			|
-;  |XVel			|
-;  |YVel			|
-;  |Rot				|
-;  |RotVel			|
-;  |Mass			|
-;  |fruction_value	|
-;  |fixed [0|1]     |
-;  |[Beliebig]		|
-;  |[... Obj2 ...]  |
-;  |[...]			|
-;  \----------------/
-;-----------------------------------------------------------
-
-
-Function Ph_ReadFromFile(Filename$)	
-	Local File = ReadFile (Filename)
-	Local Form$
-	While Not Eof(File)
-		Local Obj.Ph_Object = New Ph_Object
-		ReadLine(File)
-		Form$ =  ReadLine(File)
-		Select Form
-			Case "square"
-				Local XSize# = ReadLine(File)
-				Local YSize# = ReadLine(File)
-				Obj\CollisionBox = Sh_CreateSquare(-XSize, -YSize, XSize, YSize)
-			Case "cycle"
-				Obj\CollisionBox = Sh_CreateCycle(0,0,ReadLine(File))
-			Default
-				Delete Obj
-				Return
-		End Select
-		Obj\Pos[0] = ReadLine(File)
-		Obj\Pos[1] = ReadLine(File)
-		Obj\Vel[0] = ReadLine(File)
-		Obj\Vel[1] = ReadLine(File)
-		Obj\Rot = ReadLine(File)
-		Obj\RotVel = ReadLine(File)
-		Obj\Mass = ReadLine(File)
-		Obj\RotMass = Ph_CalculateMomentOfInertia(Obj\CollisionBox,Obj\Mass)
-		Obj\friction_value = ReadLine(File)
-		Obj\Fixed = ReadLine(File)
-		If Obj\Fixed Then
-			Obj\FixedPos[0]=Obj\Pos[0]
-			Obj\FixedPos[1]=Obj\Pos[1]
-			Obj\FixedRot=Obj\Rot
-		EndIf
-	Wend
-	
-End Function
-
 ;~IDEal Editor Parameters:
 ;~C#Blitz3D

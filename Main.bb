@@ -17,8 +17,6 @@ Local LastTime# = MilliSecs()
 Local Timer = CreateTimer(FPS)
 Local TimerError
 
-Global CollisonPointTemp#[1]
-
 Repeat
 	WaitTimer(Timer)
 	
@@ -26,14 +24,12 @@ Repeat
 	force2[0] = 0
 	force2[1] = 5
 	
-	Ph_ApplyForce(Obj, force2, pos2, False)
+	;Ph_ApplyForce(Obj, force2, pos2, False)
 	
 	MainPhysicTick(tick)
 	LastTime=MilliSecs()
 	Cls
 	MainPhysicRender()
-	
-	Plot CollisonPointTemp[0]*100, CollisonPointTemp[1]*100
 	
 	Flip
 Until KeyHit(1)
