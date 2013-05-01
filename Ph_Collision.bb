@@ -163,7 +163,7 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 		MultiplyVector(temp, obj1\Mass * (obj1\friction_value + obj2\friction_value) / 2 * -1 / t, temp)
 		Ph_ApplyForce(obj1,temp,pos_obj1, False)
 	EndIf
-		If Not obj2\Fixed Then
+	If Not obj2\Fixed Then
 		SubtractVector(obj2velUB, obj1velUB, temp)
 		MultiplyVector(temp, obj2\Mass * (obj1\friction_value + obj2\friction_value) / 2 * -1 / t, temp)
 		Ph_ApplyForce(obj2,temp,pos_obj2, False)
