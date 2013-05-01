@@ -39,7 +39,6 @@ Function Ph_DoCollision(t#)
 				
 				Ph_RelativatePosition(obj,Temp,Temp1)
 				Ph_RelativatePosition(obj2,Temp,Temp2)
-				
 				Ph_ApplyCollision(obj,obj2, Temp1, Temp2, PeekFloat(tBank,8), t)
 			EndIf
 			If obj2 = Last Ph_Object Then
@@ -110,6 +109,7 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	RotateVector(obj2velUB,angle,obj2velUB)
 	
 	Local temp#[1]
+	Local temp_#[1]
 	temp[0]=1
 	temp[1]=0	
 	
@@ -131,35 +131,49 @@ Function Ph_ApplyCollision(obj1.Ph_Object,obj2.Ph_Object, pos_obj1#[1], pos_obj2
 	
 	obj2velB[0]=1
 	obj2velB[1]=0	
-	RotateVector(obj1velB,angle+(Pi/2),obj1velB)
+	RotateVector(obj2velB,angle+(Pi/2),obj2velB)
 	
 	
 	If VectorLength(PVel1) = 0 Then Temp1 = 0 Else Temp1=Sin(RadToDeg(VectorAngle(PVel1,temp)-angle))*VectorLength(PVel1)
 	If VectorLength(PVel2) = 0 Then Temp2 = 0 Else Temp2=Sin(RadToDeg(VectorAngle(PVel2,temp)-angle))*VectorLength(PVel2)
 	
 	
+	
 	MultiplyVector(obj1velB, Temp1, obj1velB)
 	MultiplyVector(obj2velB, Temp2, obj2velB)
 	
-	;Slow down of the movement in direction of the collsion  
+;Slow down of the movement in direction of the collsion  
 	
 	;- obj1
+	If Not obj1\Fixed Then
+		MultiplyVector(obj1velB, -obj1\Mass / t, temp)
+		RotateVector(pos_obj1, obj1\Rot, temp_)
+		Ph_ApplyForce(obj1, temp, temp_,False)
+	EndIf
+	
+	If Not obj2\Fixed Then
+		MultiplyVector(obj2velB, -obj2\Mass / t, temp)
+		RotateVector(pos_obj2, obj2\Rot, temp_)
+		Ph_ApplyForce(obj2, temp, temp_, False)
+	EndIf
+	
 	
 	If Not obj1\Fixed Then
 		SubtractVector(obj1velUB, obj2velUB, temp)
 		MultiplyVector(temp, obj1\Mass * (obj1\friction_value + obj2\friction_value) / 2 * -1 / t, temp)
 		Ph_ApplyForce(obj1,temp,pos_obj1, False)
 	EndIf
-	If Not obj2\Fixed Then
+		If Not obj2\Fixed Then
 		SubtractVector(obj2velUB, obj1velUB, temp)
 		MultiplyVector(temp, obj2\Mass * (obj1\friction_value + obj2\friction_value) / 2 * -1 / t, temp)
 		Ph_ApplyForce(obj2,temp,pos_obj2, False)
 	EndIf
+		
 	
-	obj1\Vel[0] = obj1velUB[0]
-	obj1\Vel[1] = obj1velUB[1]
-	obj2\Vel[0] = obj2velUB[0]
-	obj2\Vel[1] = obj2velUB[1]
+;	obj1\Vel[0] = obj1velUB[0]
+;	obj1\Vel[1] = obj1velUB[1]
+;	obj2\Vel[0] = obj2velUB[0]
+;	obj2\Vel[1] = obj2velUB[1]
 		
 	;Calculating collision/Stoss
 	

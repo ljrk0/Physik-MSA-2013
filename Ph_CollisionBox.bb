@@ -57,6 +57,7 @@ Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
 	Local temp2#[1]
 	Local Pos0#[1]
 	Local Pos1#[1]
+	Local obj1L1, obj1L2, obj2L1, obj2L2
 	Cls
 	For i=1 To obj1\PointCount
 		For j=1 To obj2\PointCount
@@ -64,9 +65,13 @@ Function Ph_CollisionBoxColliding(obj1.Shape,obj2.Shape)
 				If count=0 Then
 					Pos0[0] = temp[0]
 					Pos0[1] = temp[1]
+					obj1L1=i
+					obj2L1=j
 				Else
 					Pos1[0] = temp[0]
 					Pos1[1] = temp[1]
+					obj1L2=i
+					obj2L2=j
 				EndIf
 				
 				count=count+1
