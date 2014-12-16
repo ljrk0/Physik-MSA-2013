@@ -8,5 +8,6 @@
   - rotation-acceleration
   - mass
   - momentum of inertia
+
 ##Collision
   - detection and applying correctly
